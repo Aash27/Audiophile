@@ -108,12 +108,6 @@ Output includes:
 Feedback is structured to be clear, non-repetitive, and actionable.
 
 ---
-
-## Notes
-- Designed for clarity and usability  
-- Feedback avoids repetition  
-- Adapted for different skill levels using age groups
-
 ## Collaborators
 - [John Thornton](https://github.com/thorntonjb)
 - [Eric Tang](https://github.com/er1c84)

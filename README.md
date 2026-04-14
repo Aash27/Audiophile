@@ -115,6 +115,6 @@ Feedback is structured to be clear, non-repetitive, and actionable.
 - Adapted for different skill levels using age groups
 
 ## Collaborators
-- Jon Thornton
-- Eric Tang
-- Max Kogan
+- [John Thornton](https://github.com/thorntonjb)
+- [Eric Tang](https://github.com/er1c84)
+- [Max Kogan](https://github.com/MaxKoganUNCC)

@@ -105,8 +105,6 @@ Output includes:
 - Positive aspects  
 - Areas for improvement  
 
-Feedback is structured to be clear, non-repetitive, and actionable.
-
 ---
 ## Collaborators
 - [John Thornton](https://github.com/thorntonjb)

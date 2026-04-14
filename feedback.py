@@ -8,7 +8,7 @@ GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
 print("GROQ_API_KEY LENGTH:", len(GROQ_API_KEY))
 
 if not GROQ_API_KEY:
-    raise ValueError("❌ GROQ_API_KEY missing")
+    raise ValueError("GROQ_API_KEY missing")
 
 client = Groq(api_key=GROQ_API_KEY)
 

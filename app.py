@@ -13,8 +13,7 @@ INSTRUMENTS = list(INSTRUMENT_RANGES.keys())
 AGE_GROUPS  = ["Child (6-12)", "Teen (13-18)", "Adult (18+)"]
 
 EMOJIS = {
-    "Guitar": "🎸", "Violin": "🎻", "Piano": "🎹",
-    "Flute": "🪈", "Saxophone": "🎷", "Trumpet": "🎺", "Voice": "🎤",
+    "Guitar": "🎸", "Piano": "🎹", "Voice": "🎤", "Clarinet": "🎼"
 }
 
 # ── CSS ──────────────────────────────────────────────────────────────────────
@@ -304,8 +303,7 @@ def render_feedback_html(fb: dict, instrument: str, age_group: str):
             f"<span>{tip['text']}</span></div>"
         )
 
-    emoji = {"Guitar":"🎸","Violin":"🎻","Piano":"🎹",
-             "Flute":"🪈","Saxophone":"🎷","Trumpet":"🎺","Voice":"🎤"}.get(instrument,"🎵")
+    emoji = {"Guitar": "🎸", "Piano": "🎹", "Voice": "🎤", "Clarinet": "🎼"}.get(instrument,"🎵")
 
     return f"""
 <div style='font-family:Lato,sans-serif;background:#141417;border:1px solid #2a2a32;padding:28px;color:#f0ede6;'>

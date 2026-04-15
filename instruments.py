@@ -6,12 +6,9 @@ correction advice for Audiophile.
 
 INSTRUMENT_RANGES = {
     "Guitar":    (82,   880),
-    "Violin":    (196, 3520),
     "Piano":     (27,  4186),
-    "Flute":     (261, 2093),
-    "Saxophone": (69,  1175),
-    "Trumpet":   (165, 1047),
     "Voice":     (80,  1000),
+    "Clarinet":  (146, 2100),
 }
 
 # Instrument-specific technique tips per intonation problem
@@ -35,26 +32,6 @@ INSTRUMENT_TIPS = {
             "Record whole notes slowly. Identify problem positions before increasing tempo.",
         ],
     },
-    "Violin": {
-        "sharp": [
-            "Your first finger is sitting too far back from the nut, shortening the "
-            "vibrating length. Shift the hand frame slightly toward the bridge.",
-            "Check your thumb — if it's wrapped too far around the neck it collapses "
-            "the hand and causes sharp intonation across all fingers.",
-        ],
-        "flat": [
-            "Your finger placement is too close to the nut. Extend the hand frame "
-            "fractionally — the pitch will come up.",
-            "Low bow pressure creates a diffuse flat tone. Increase arm weight into "
-            "the string; don't squeeze with the wrist.",
-        ],
-        "general": [
-            "Practice with an open-string drone. Play stopped notes against an open A "
-            "or D — your ear will self-correct faster than any exercise.",
-            "Slow scales at 40 bpm, one full beat per note. Your problem positions will "
-            "expose themselves immediately.",
-        ],
-    },
     "Piano": {
         "sharp": [
             "Piano pitch is fixed hardware — a consistent sharp reading means the "
@@ -73,64 +50,6 @@ INSTRUMENT_TIPS = {
             "speak earlier or decay faster. Consistency matters as much as pitch.",
             "If your piano hasn't been tuned in over a year, recording pitch data on it "
             "is wasting practice time. Schedule a tuning first.",
-        ],
-    },
-    "Flute": {
-        "sharp": [
-            "Your embouchure hole is too open. Roll the head joint in (toward you) — "
-            "each degree of roll drops the pitch noticeably.",
-            "Air speed is too high. Slow the stream and direct it slightly downward.",
-        ],
-        "flat": [
-            "Roll the head joint out (away from you) to open the embouchure more.",
-            "Air pressure is too low. Support the column from the diaphragm — "
-            "a thin, unsupported stream always reads flat.",
-        ],
-        "general": [
-            "Mark the in-tune head joint position with a pencil dot so you reset "
-            "correctly every session — consistency starts before you play a note.",
-            "Long tone and harmonic exercises expose embouchure inconsistency faster "
-            "than scale work. Start there.",
-        ],
-    },
-    "Saxophone": {
-        "sharp": [
-            "You're biting the reed too hard. Jaw pressure closes the reed, raises "
-            "pitch. Relax the lower jaw and let the reed vibrate freely.",
-            "Check reed strength — a reed too stiff for your embouchure causes chronic "
-            "sharpness because you compensate by squeezing.",
-        ],
-        "flat": [
-            "Insufficient air support is the primary cause. Engage the diaphragm — "
-            "maintain a full, pressurized column at all times.",
-            "Check mouthpiece seating depth. Too far on lowers pitch. Mark the "
-            "correct position and reset it every session.",
-        ],
-        "general": [
-            "Long tones on concert Bb, F, and C are your anchor pitches. If those "
-            "are off, everything else will be off.",
-            "Record yourself on altissimo passages — voicing ('tee' shape) lifts the "
-            "pitch center significantly in that register.",
-        ],
-    },
-    "Trumpet": {
-        "sharp": [
-            "You're overblowing in the middle register. Back off the air stream and "
-            "let the embouchure do more work — less air, more focus.",
-            "Check that the mouthpiece isn't pushed in too far. A fraction of pull-out "
-            "drops the pitch back to center.",
-        ],
-        "flat": [
-            "Insufficient air support, especially in the lower register. Drive more "
-            "air column — engage the diaphragm.",
-            "Embouchure is too relaxed. Firm the lip corners without clenching, and "
-            "direct air forward rather than downward.",
-        ],
-        "general": [
-            "10 minutes of long tones daily, minimum. Sustain each pitch and listen "
-            "before checking the tuner. Train the ear first.",
-            "Lip slurs between partials build the muscle control that makes intonation "
-            "automatic. Clarke Technical Studies are non-negotiable.",
         ],
     },
     "Voice": {
@@ -153,4 +72,25 @@ INSTRUMENT_TIPS = {
             "causes pitch inconsistency. Work the passaggio deliberately.",
         ],
     },
+    "Clarinet": {
+        "sharp": [
+            "You may try pulling out a little at the barrel or middle joint to "
+            "physically extend the clarinet and lower its pitch by a few cents.",
+            "While keeping your corners firm, try lowering your jaw or "
+            "lowering your tongue position to lower the pitch yourself."
+        ],
+        "flat": [
+            "If your barrel/middle joint is pulled out, try pushing them back "
+            "in to increase the pitch by a few cents.",
+            "Make sure your corners are firm and your tongue position is not "
+            "too low. "
+        ], 
+        "general": [
+            "An older reed may affect your intonation. Break in a new reed "
+            "and see if your intonation improves with the new reed.",
+            "The range in which you play will also affect your intonation, "
+            "try taking your music down/up an octave and see your tendencies in that register."
+        ]
+
+    }
 }

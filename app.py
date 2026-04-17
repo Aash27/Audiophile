@@ -205,7 +205,7 @@ def analyze(audio_path, instrument, age_group):
 # ── Gradio UI ────────────────────────────────────────────────────────────────
 
 def build_demo():
-    with gr.Blocks(css="styles.css", title="Audiophile — Pitch Detection") as demo:
+    with gr.Blocks(css_paths="styles.css", title="Audiophile — Pitch Detection") as demo:
 
         # Header
         gr.HTML("""

@@ -38,9 +38,9 @@ CSS = """
 }
 
 body, .gradio-container, #root {
-    background: #3A3C35 !important;
+    background: #48483A !important;
     color: #f0ede6 !important;
-    font-family: 'Lato', sans-serif !important;
+    font-family: 'Inter', sans-serif !important;
 }
 
 footer { display: none !important; }
@@ -48,12 +48,12 @@ footer { display: none !important; }
 /* ── Header ── */
 #audiophile-header {
     background:
-        linear-gradient(rgba(58,60,53,0.80), rgba(58,60,53,0.80)),
+        linear-gradient(rgba(72,72,58,0.80), rgba(72,72,58,0.80)),
         url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=1400&q=80')
         center / cover no-repeat;
     padding: 52px 40px 44px;
     text-align: center;
-    border-bottom: 1px solid #6B7568;
+    border-bottom: 1px solid #74776B;
     margin-bottom: 0;
 }
 #audiophile-header h1 {
@@ -63,11 +63,11 @@ footer { display: none !important; }
     color: #f0ede6;
     margin: 0 0 8px;
 }
-#audiophile-header h1 span { font-style: italic; color: #E2F3EC; }
+#audiophile-header h1 span { font-style: italic; color: #DFF8EB; }
 #audiophile-header p {
     font-family: 'Playfair Display', serif;
     font-style: italic;
-    color: #9C8A9B;
+    color: #A28F9D;
     font-size: 28px;
     margin: 0;
 }
@@ -78,7 +78,7 @@ footer { display: none !important; }
     font-size: 14px !important;
     letter-spacing: 3px !important;
     text-transform: uppercase !important;
-    color: #6B7568 !important;
+    color: #74776B !important;
     margin-bottom: 6px !important;
 }
 .sec-title {
@@ -92,8 +92,8 @@ footer { display: none !important; }
 .gr-panel, .gr-box, .gr-form, .panel,
 div[data-testid="column"],
 .block, .prose {
-    background: #565552 !important;
-    border-color: #6B7568 !important;
+    background: #5C574F !important;
+    border-color: #74776B !important;
     border-radius: 0 !important;
 }
 
@@ -103,26 +103,26 @@ label, .label-wrap span, .svelte-1gfkn6j {
     font-size: 10px !important;
     letter-spacing: 2px !important;
     text-transform: uppercase !important;
-    color: #6B7568 !important;
+    color: #74776B !important;
 }
 
 /* ── Inputs / dropdowns ── */
 input, select, textarea,
 .gr-dropdown select,
 .wrap select {
-    background: ##E2F3EC !important;
-    border: 1px solid ##E2F3EC !important;
+    background: #5C574F !important;
+    border: 1px solid #74776B !important;
     border-radius: 0 !important;
-    color: #3A3C35 !important;
+    color: #f0ede6 !important;
     font-family: 'Inter', sans-serif !important;
     font-size: 14px !important;
 }
-input:focus, select:focus { border-color: #E2F3EC !important; outline: none !important; }
+input:focus, select:focus { border-color: #DFF8EB !important; outline: none !important; }
 
 /* ── Buttons ── */
 button.primary, .primary {
-    background: #E2F3EC !important;
-    color: #3A3C35 !important;
+    background: #DFF8EB !important;
+    color: #48483A !important;
     border: none !important;
     border-radius: 0 !important;
     font-family: 'Inter', sans-serif !important;
@@ -132,24 +132,24 @@ button.primary, .primary {
     font-size: 12px !important;
     transition: box-shadow .2s !important;
 }
-button.primary:hover { box-shadow: 0 0 20px rgba(226,243,236,.35) !important; }
+button.primary:hover { box-shadow: 0 0 20px rgba(223,248,235,.35) !important; }
 
 button.secondary {
     background: transparent !important;
     color: #f0ede6 !important;
-    border: 1px solid #6B7568 !important;
+    border: 1px solid #74776B !important;
     border-radius: 0 !important;
     font-family: 'Inter', sans-serif !important;
     letter-spacing: 2px !important;
     text-transform: uppercase !important;
     font-size: 12px !important;
 }
-button.secondary:hover { border-color: #E2F3EC !important; }
+button.secondary:hover { border-color: #DFF8EB !important; }
 
 /* ── Audio recorder ── */
 .audio-recorder, [data-testid="audio"] {
-    background: #565552 !important;
-    border: 1px solid #6B7568 !important;
+    background: #5C574F !important;
+    border: 1px solid #74776B !important;
     border-radius: 0 !important;
 }
 
@@ -162,26 +162,26 @@ button.secondary:hover { border-color: #E2F3EC !important; }
 
 /* ── Tabs ── */
 .tab-nav {
-    background: #565552 !important;
-    border-bottom: 1px solid #6B7568 !important;
+    background: #5C574F !important;
+    border-bottom: 1px solid #74776B !important;
 }
 .tab-nav button {
     font-family: 'JetBrains Mono', monospace !important;
     font-size: 10px !important;
     letter-spacing: 2px !important;
     text-transform: uppercase !important;
-    color: #6B7568 !important;
+    color: #74776B !important;
     border-radius: 0 !important;
     background: transparent !important;
 }
 .tab-nav button.selected {
-    color: #E2F3EC !important;
-    border-bottom: 2px solid #E2F3EC !important;
+    color: #DFF8EB !important;
+    border-bottom: 2px solid #DFF8EB !important;
 }
 
 /* ── Markdown / prose ── */
 .prose p, .prose li { color: #f0ede6 !important; font-size: 14px !important; line-height: 1.7 !important; }
-.prose strong { color: #E2F3EC !important; }
+.prose strong { color: #DFF8EB !important; }
 .prose h3 { font-family: 'Playfair Display', serif !important; color: #f0ede6 !important; }
 """
 
@@ -230,7 +230,7 @@ def render_pitch_html(note, frequency, cents, accuracy, consistency, all_notes):
             )
 
     return f"""
-<div style='font-family:Lato,sans-serif;background:#141417;border:1px solid #2a2a32;padding:28px;color:#f0ede6;'>
+<div style='font-family:Inter,sans-serif;background:#141417;border:1px solid #2a2a32;padding:28px;color:#f0ede6;'>
 
   <div style='font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:3px;
               text-transform:uppercase;color:#6b6b7a;margin-bottom:18px;'>
@@ -320,7 +320,7 @@ def render_feedback_html(fb: dict, instrument: str, age_group: str):
     emoji = {"Guitar": "🎸", "Piano": "🎹", "Voice": "🎤", "Clarinet": "🎼"}.get(instrument,"🎵")
 
     return f"""
-<div style='font-family:Lato,sans-serif;background:#141417;border:1px solid #2a2a32;padding:28px;color:#f0ede6;'>
+<div style='font-family:Inter,sans-serif;background:#141417;border:1px solid #2a2a32;padding:28px;color:#f0ede6;'>
 
   <div style='font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:3px;
               text-transform:uppercase;color:#6b6b7a;margin-bottom:18px;'>

@@ -5,14 +5,14 @@ correction advice for Audiophile.
 """
 
 INSTRUMENT_RANGES = {
-    "Guitar":    (82,   880),
-    "Violin":    (196, 3520),
-    "Piano":     (27,  4186),
-    "Flute":     (261, 2093),
-    "Saxophone": (69,  1175),
-    "Trumpet":   (165, 1047),
-    "Voice":     (80,  1000),
+    "Guitar":    (82, 880),
+    "Piano":     (27, 4186),
+    "Clarinet":  (147, 1568),
+    "Violin":    (196, 2637),
+    "Flute":     (262, 2093),
+    "Voice":     (80, 1000),
 }
+
 
 # Instrument-specific technique tips per intonation problem
 INSTRUMENT_TIPS = {

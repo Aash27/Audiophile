@@ -38,7 +38,7 @@ CSS = """
 }
 
 body, .gradio-container, #root {
-    background: #48483A !important;
+    background: #DFF8EB !important;
     color: #f0ede6 !important;
     font-family: 'Inter', sans-serif !important;
 }
@@ -92,7 +92,7 @@ footer { display: none !important; }
 .gr-panel, .gr-box, .gr-form, .panel,
 div[data-testid="column"],
 .block, .prose {
-    background: #5C574F !important;
+    background: #1C1C21 !important;
     border-color: #74776B !important;
     border-radius: 0 !important;
 }
@@ -110,10 +110,10 @@ label, .label-wrap span, .svelte-1gfkn6j {
 input, select, textarea,
 .gr-dropdown select,
 .wrap select {
-    background: #5C574F !important;
-    border: 1px solid #74776B !important;
+    background: #DFF8EB !important;
+    border: 1px solid #DFF8EB !important;
     border-radius: 0 !important;
-    color: #f0ede6 !important;
+    color: #74776B !important;
     font-family: 'Inter', sans-serif !important;
     font-size: 14px !important;
 }
@@ -148,7 +148,7 @@ button.secondary:hover { border-color: #DFF8EB !important; }
 
 /* ── Audio recorder ── */
 .audio-recorder, [data-testid="audio"] {
-    background: #5C574F !important;
+    background: #1C1C21 !important;
     border: 1px solid #74776B !important;
     border-radius: 0 !important;
 }
@@ -162,7 +162,7 @@ button.secondary:hover { border-color: #DFF8EB !important; }
 
 /* ── Tabs ── */
 .tab-nav {
-    background: #5C574F !important;
+    background: #1C1C21 !important;
     border-bottom: 1px solid #74776B !important;
 }
 .tab-nav button {

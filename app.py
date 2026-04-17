@@ -1,8 +1,3 @@
-"""
-app.py  —  Audiophile  |  Hugging Face Spaces
-Full pitch detection + age-adjusted feedback demo.
-"""
-
 import gradio as gr
 from pitch_utils import detect_pitch_and_note
 from feedback import generate_feedback
@@ -13,11 +8,14 @@ INSTRUMENTS = list(INSTRUMENT_RANGES.keys())
 AGE_GROUPS  = ["Child (6-12)", "Teen (13-18)", "Adult (18+)"]
 
 EMOJIS = {
-    "Guitar": "🎸", "Violin": "🎻", "Piano": "🎹",
-    "Flute": "🪈", "Saxophone": "🎷", "Trumpet": "🎺", "Voice": "🎤",
+    "Guitar": "🎸",
+    "Piano": "🎹",
+    "Clarinet": "🎶",
+    "Violin": "🎻",
+    "Flute": "🪈",
+    "Voice": "🎤",
 }
 
-# ── CSS ──────────────────────────────────────────────────────────────────────
 CSS = """
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&family=JetBrains+Mono:wght@400;600&display=swap');
 
@@ -304,9 +302,14 @@ def render_feedback_html(fb: dict, instrument: str, age_group: str):
             f"<span>{tip['text']}</span></div>"
         )
 
-    emoji = {"Guitar":"🎸","Violin":"🎻","Piano":"🎹",
-             "Flute":"🪈","Saxophone":"🎷","Trumpet":"🎺","Voice":"🎤"}.get(instrument,"🎵")
+    emoji = {
+    "Guitar": "🎸",
+    "Piano": "🎹",
+    "Clarinet": "🎶",
+    "Violin": "🎻",
+    "Flute": "🪈"}.get(instrument, "🎵")
 
+    
     return f"""
 <div style='font-family:Lato,sans-serif;background:#141417;border:1px solid #2a2a32;padding:28px;color:#f0ede6;'>
 
@@ -390,7 +393,7 @@ def build_demo():
         gr.HTML("""
         <div id="audiophile-header">
           <h1>Audio<span>phile</span></h1>
-          <p>Record. Detect. Improve.</p>
+          <p></p>
         </div>
         """)
 
@@ -408,7 +411,7 @@ def build_demo():
                   <div style='font-size:13px;color:#a89880;line-height:1.8;'>
                     ① Select your instrument and age group<br>
                     ② Click the mic to record, or upload an audio file<br>
-                    ③ Play a note or short phrase (2–5 seconds works well)<br>
+                    ③ Play a note or short phrase<br>
                     ④ Click <strong style='color:#c8a96e;'>Analyze</strong> to run pitch detection<br>
                     ⑤ Review pitch data and your personalized feedback
                   </div>

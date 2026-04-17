@@ -99,7 +99,7 @@ input, select, textarea,
     background: #1c1c21 !important;
     border: 1px solid #2a2a32 !important;
     border-radius: 0 !important;
-    color: #f0ede6 !important;
+    color: #1c1c21 !important;
     font-family: 'Lato', sans-serif !important;
     font-size: 14px !important;
 }
@@ -392,78 +392,77 @@ def build_demo():
         </div>
         """)
 
-        with gr.Row():
+        # ── Left column: inputs ──────────────────────────────────────
+        with gr.Tab("Instruments and Audio"):
 
-            # ── Left column: inputs ──────────────────────────────────────
-            with gr.Column(scale=1):
-
-                gr.HTML("""
-                <div style='background:#1c1c21;border:1px solid #2a2a32;padding:16px;
-                            margin-top:16px;margin-bottom:20px;'>
-                  <div style='font-family:"JetBrains Mono",monospace;font-size:9px;
-                              letter-spacing:2px;text-transform:uppercase;color:#6b6b7a;
-                              margin-bottom:10px;'>How to use</div>
-                  <div style='font-size:13px;color:#a89880;line-height:1.8;'>
-                    ① Select your instrument and age group<br>
-                    ② Click the mic to record, or upload an audio file<br>
-                    ③ Play a note or short phrase (2–5 seconds works well)<br>
-                    ④ Click <strong style='color:#c8a96e;'>Analyze</strong> to run pitch detection<br>
-                    ⑤ Review pitch data and your personalized feedback
-                  </div>
+            gr.HTML("""
+            <div style='background:#1c1c21;border:1px solid #2a2a32;padding:16px;
+                        margin-top:16px;margin-bottom:20px;'>
+                <div style='font-family:"JetBrains Mono",monospace;font-size:9px;
+                            letter-spacing:2px;text-transform:uppercase;color:#6b6b7a;
+                            margin-bottom:10px;'>How to use</div>
+                <div style='font-size:13px;color:#a89880;line-height:1.8;'>
+                ① Select your instrument and age group<br>
+                ② Click the mic to record, or upload an audio file<br>
+                ③ Play a note or short phrase (2–5 seconds works well)<br>
+                ④ Click <strong style='color:#c8a96e;'>Analyze</strong> to run pitch detection<br>
+                ⑤ Review pitch data and your personalized feedback
                 </div>
-                """)
+            </div>
+            """)
 
-                gr.HTML("<div class='sec-label' style='padding:0 0 2px;'>Step 01</div>"
-                        "<div class='sec-title' style='padding:0 0 12px;'>Configure</div>")
+            gr.HTML("<div class='sec-label' style='padding:0 0 2px;'>Step 01</div>"
+                    "<div class='sec-title' style='padding:0 0 12px;'>Configure</div>")
 
-                instrument = gr.Dropdown(
-                    choices=INSTRUMENTS,
-                    value="Guitar",
-                    label="Instrument",
-                    interactive=True,
-                )
+            instrument = gr.Dropdown(
+                choices=INSTRUMENTS,
+                value="Guitar",
+                label="Instrument",
+                interactive=True,
+                show_label=True,    
+            )
 
-                age_group = gr.Dropdown(
-                    choices=AGE_GROUPS,
-                    value="Adult (18+)",
-                    label="Age Group",
-                    interactive=True,
-                )
+            age_group = gr.Dropdown(
+                choices=AGE_GROUPS,
+                value="Adult (18+)",
+                label="Age Group",
+                interactive=True,
+            )
 
-                gr.HTML("<div class='sec-label' style='margin-top:24px;padding:0 0 2px;'>Step 02</div>"
-                        "<div class='sec-title' style='padding:0 0 12px;'>Record or Upload</div>")
+            gr.HTML("<div class='sec-label' style='margin-top:24px;padding:0 0 2px;'>Step 02</div>"
+                    "<div class='sec-title' style='padding:0 0 12px;'>Record or Upload</div>")
 
-                audio_input = gr.Audio(
-                    sources=["microphone", "upload"],
-                    type="filepath",
-                    label="🎙️  Record or upload .wav / .mp3",
-                    format="wav",
-                )
+            audio_input = gr.Audio(
+                sources=["microphone", "upload"],
+                type="filepath",
+                label="🎙️  Record or upload .wav / .mp3",
+                format="wav",
+            )
 
-                analyze_btn = gr.Button("⚡  Analyze Performance", variant="primary")
+            analyze_btn = gr.Button("⚡  Analyze Performance", variant="primary")
 
-            # ── Right column: outputs ────────────────────────────────────
-            with gr.Column(scale=1):
+        # ── Right column: outputs ────────────────────────────────────
+        with gr.Tab("Pitches and Feedback"):
 
-                gr.HTML("<div class='sec-label' style='margin-top:16px;padding:0 0 2px;'>Step 03</div>"
-                        "<div class='sec-title' style='padding:0 0 12px;'>Pitch Detection</div>")
+            gr.HTML("<div class='sec-label' style='margin-top:16px;padding:0 0 2px;'>Step 03</div>"
+                    "<div class='sec-title' style='padding:0 0 12px;'>Pitch Detection</div>")
 
-                pitch_out = gr.HTML(
-                    value="<div style='background:#141417;border:1px solid #2a2a32;padding:40px;"
-                          "text-align:center;color:#6b6b7a;font-family:\"JetBrains Mono\",monospace;"
-                          "font-size:11px;letter-spacing:2px;'>"
-                          "Record or upload audio, then click Analyze.</div>"
-                )
+            pitch_out = gr.HTML(
+                value="<div style='background:#141417;border:1px solid #2a2a32;padding:40px;"
+                        "text-align:center;color:#6b6b7a;font-family:\"JetBrains Mono\",monospace;"
+                        "font-size:11px;letter-spacing:2px;'>"
+                        "Record or upload audio, then click Analyze.</div>"
+            )
 
-                gr.HTML("<div class='sec-label' style='margin-top:24px;padding:0 0 2px;'>Step 04</div>"
-                        "<div class='sec-title' style='padding:0 0 12px;'>Feedback</div>")
+            gr.HTML("<div class='sec-label' style='margin-top:24px;padding:0 0 2px;'>Step 04</div>"
+                    "<div class='sec-title' style='padding:0 0 12px;'>Feedback</div>")
 
-                feedback_out = gr.HTML(
-                    value="<div style='background:#141417;border:1px solid #2a2a32;padding:40px;"
-                          "text-align:center;color:#6b6b7a;font-family:\"JetBrains Mono\",monospace;"
-                          "font-size:11px;letter-spacing:2px;'>"
-                          "Feedback will appear here after analysis.</div>"
-                )
+            feedback_out = gr.HTML(
+                value="<div style='background:#141417;border:1px solid #2a2a32;padding:40px;"
+                        "text-align:center;color:#6b6b7a;font-family:\"JetBrains Mono\",monospace;"
+                        "font-size:11px;letter-spacing:2px;'>"
+                        "Feedback will appear here after analysis.</div>"
+            )
 
         # ── Wire up ──────────────────────────────────────────────────────
         analyze_btn.click(

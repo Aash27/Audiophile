@@ -38,7 +38,7 @@ CSS = """
 }
 
 body, .gradio-container, #root {
-    background: #070707 !important;
+    background: #3A3C35 !important;
     color: #f0ede6 !important;
     font-family: 'Lato', sans-serif !important;
 }
@@ -48,12 +48,12 @@ footer { display: none !important; }
 /* ── Header ── */
 #audiophile-header {
     background:
-        linear-gradient(rgba(7,7,7,0.80), rgba(7,7,7,0.80)),
+        linear-gradient(rgba(58,60,53,0.80), rgba(58,60,53,0.80)),
         url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=1400&q=80')
         center / cover no-repeat;
     padding: 52px 40px 44px;
     text-align: center;
-    border-bottom: 1px solid #655356;
+    border-bottom: 1px solid #6B7568;
     margin-bottom: 0;
 }
 #audiophile-header h1 {
@@ -63,11 +63,11 @@ footer { display: none !important; }
     color: #f0ede6;
     margin: 0 0 8px;
 }
-#audiophile-header h1 span { font-style: italic; color: #C1EEFF; }
+#audiophile-header h1 span { font-style: italic; color: #E2F3EC; }
 #audiophile-header p {
     font-family: 'Playfair Display', serif;
     font-style: italic;
-    color: #655356;
+    color: #9C8A9B;
     font-size: 28px;
     margin: 0;
 }
@@ -78,7 +78,7 @@ footer { display: none !important; }
     font-size: 14px !important;
     letter-spacing: 3px !important;
     text-transform: uppercase !important;
-    color: #655356 !important;
+    color: #6B7568 !important;
     margin-bottom: 6px !important;
 }
 .sec-title {
@@ -92,8 +92,8 @@ footer { display: none !important; }
 .gr-panel, .gr-box, .gr-form, .panel,
 div[data-testid="column"],
 .block, .prose {
-    background: #28231C !important;
-    border-color: #655356 !important;
+    background: #565552 !important;
+    border-color: #6B7568 !important;
     border-radius: 0 !important;
 }
 
@@ -103,26 +103,26 @@ label, .label-wrap span, .svelte-1gfkn6j {
     font-size: 10px !important;
     letter-spacing: 2px !important;
     text-transform: uppercase !important;
-    color: #655356 !important;
+    color: #6B7568 !important;
 }
 
 /* ── Inputs / dropdowns ── */
 input, select, textarea,
 .gr-dropdown select,
 .wrap select {
-    background: #513B3C !important;
-    border: 1px solid #655356 !important;
+    background: ##E2F3EC !important;
+    border: 1px solid ##E2F3EC !important;
     border-radius: 0 !important;
-    color: #f0ede6 !important;
+    color: #3A3C35 !important;
     font-family: 'Inter', sans-serif !important;
     font-size: 14px !important;
 }
-input:focus, select:focus { border-color: #C1EEFF !important; outline: none !important; }
+input:focus, select:focus { border-color: #E2F3EC !important; outline: none !important; }
 
 /* ── Buttons ── */
 button.primary, .primary {
-    background: #C1EEFF !important;
-    color: #070707 !important;
+    background: #E2F3EC !important;
+    color: #3A3C35 !important;
     border: none !important;
     border-radius: 0 !important;
     font-family: 'Inter', sans-serif !important;
@@ -132,24 +132,24 @@ button.primary, .primary {
     font-size: 12px !important;
     transition: box-shadow .2s !important;
 }
-button.primary:hover { box-shadow: 0 0 20px rgba(193,238,255,.35) !important; }
+button.primary:hover { box-shadow: 0 0 20px rgba(226,243,236,.35) !important; }
 
 button.secondary {
     background: transparent !important;
     color: #f0ede6 !important;
-    border: 1px solid #655356 !important;
+    border: 1px solid #6B7568 !important;
     border-radius: 0 !important;
     font-family: 'Inter', sans-serif !important;
     letter-spacing: 2px !important;
     text-transform: uppercase !important;
     font-size: 12px !important;
 }
-button.secondary:hover { border-color: #C1EEFF !important; }
+button.secondary:hover { border-color: #E2F3EC !important; }
 
 /* ── Audio recorder ── */
 .audio-recorder, [data-testid="audio"] {
-    background: #513B3C !important;
-    border: 1px solid #655356 !important;
+    background: #565552 !important;
+    border: 1px solid #6B7568 !important;
     border-radius: 0 !important;
 }
 
@@ -162,26 +162,26 @@ button.secondary:hover { border-color: #C1EEFF !important; }
 
 /* ── Tabs ── */
 .tab-nav {
-    background: #28231C !important;
-    border-bottom: 1px solid #655356 !important;
+    background: #565552 !important;
+    border-bottom: 1px solid #6B7568 !important;
 }
 .tab-nav button {
     font-family: 'JetBrains Mono', monospace !important;
     font-size: 10px !important;
     letter-spacing: 2px !important;
     text-transform: uppercase !important;
-    color: #655356 !important;
+    color: #6B7568 !important;
     border-radius: 0 !important;
     background: transparent !important;
 }
 .tab-nav button.selected {
-    color: #C1EEFF !important;
-    border-bottom: 2px solid #C1EEFF !important;
+    color: #E2F3EC !important;
+    border-bottom: 2px solid #E2F3EC !important;
 }
 
 /* ── Markdown / prose ── */
 .prose p, .prose li { color: #f0ede6 !important; font-size: 14px !important; line-height: 1.7 !important; }
-.prose strong { color: #C1EEFF !important; }
+.prose strong { color: #E2F3EC !important; }
 .prose h3 { font-family: 'Playfair Display', serif !important; color: #f0ede6 !important; }
 """
 

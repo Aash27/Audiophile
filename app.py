@@ -273,8 +273,8 @@ def build_demo():
                                 </aside>
                         """)
 
-                    with gr.Column(scale = 2):
-                        
+                    with gr.Column(scale=1):
+
                         with gr.Row():
 
                             instrument = gr.Dropdown(
@@ -282,7 +282,7 @@ def build_demo():
                                 value="Guitar",
                                 label="Instrument",
                                 interactive=True,
-                                elem_classes="recital-dropdowns"
+                                elem_classes="recital-dropdown"
                             )
 
                             age_group = gr.Dropdown(
@@ -290,7 +290,7 @@ def build_demo():
                                 value="Adult (18+)",
                                 label="Age Group",
                                 interactive=True,
-                                elem_classes="recital-dropdowns"
+                                elem_classes="recital-dropdown"
                             )
 
                         audio_input = gr.Audio(

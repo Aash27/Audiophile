@@ -207,20 +207,39 @@ def analyze(audio_path, instrument, age_group):
 def build_demo():
     with gr.Blocks(css_paths="styles.css", title="Audiophile — Pitch Detection") as demo:
 
+
         # Header
         gr.HTML("""
-		<section class="container hero center">
-			<h1 style="margin-top: 1.5rem; font-size: 5vw">
-				<span class="sans">Audiophile</span>,<br />
-				<em id="comma">for the love of Music</em>
-			</h1>
-			<p>Submit or record a single recording and receive feedback.</p>
-		</section>
+            <!-- Masthead -->
+            <header class="masthead">
+                <div class="masthead-inner">
+                    <a class="brand" href="index.html">
+                        <span class="brand-mark">cv</span>
+                        <span>
+                            <span class="brand-name">Audiophile</span>
+                        </span>
+                    </a>
+                    <nav class="nav">
+                        <a href="index.html" class="active"><span class="gold-underline">Selection & Submission</span></a>
+                        <a href="feedback.html">Feedback</a>
+                    </nav>
+                </div>
+            </header>
+        """)
+
+        # Hero
+        gr.HTML("""
+            <section class="container hero center">
+                <h1 style="margin-top: 1.5rem; font-size: 5vw">
+                    <span class="sans">Audiophile</span>,<br />
+                    <em id="comma">for the love of Music</em>
+                </h1>
+                <p>Submit or record a single recording and receive feedback.</p>
+            </section>
         """)
 
         # ── First tab - Input ──────────────────────────────────────
         with gr.Tab("Instruments and Audio"):
-            # left column
             gr.HTML("""
                 <div class="container layout">
                     <!-- Instructions -->
@@ -266,7 +285,11 @@ def build_demo():
                             <p>Your recording is held in the browser only — it never leaves this page. Refresh the tab and it is gone.</p>
                         </div>
                     </aside>
+                <div>
+            """)
 
+            with gr.HTML(html_template="""
+                <div class="container layout">
                     <!-- Form -->
                     <section>
                         <form id="submission-form" class="frame form" novalidate>
@@ -293,55 +316,62 @@ def build_demo():
                                     <button type="button" id="remove-file" class="remove-btn">Remove</button>
                                 </div>
                             </label>
-
-                            <div class="fields">
-                                <label class="field">
-                                    <span class="eyebrow field-label">Instrument</span>
-                                    <select id="instr">
-                                        <option>Guitar</option>
-                                        <option>Piano</option>
-                                        <option>Voice</option>
-                                        <option>Clarinet</option>
-                                    </select>
-                                </label>
-                                <label class="field">
-                                    <span class="eyebrow field-label">Age Group</span>
-                                    <select id="ages">
-                                        <option>Child (6-12)</option>
-                                        <option>Teen (13-18)</option>
-                                        <option>Adult (18+)</option>
-                                    </select>
-                                </label>
-                            </div>
-
-                            <div class="actions">
-                                <button id="submit-btn" type="submit" class="btn-primary">
-                                    <span id="submit-label">Analyze</span>
-                                    <span aria-hidden="true">→</span>
-                                </button>
-                            </div>
                         </form>
+                        @children
                     </section>
                 </div>
-            """)
+            """) as form:
+                # Instruments
+                # <select id="instr">
+                    # <option>Guitar</option>
+                    # <option>Piano</option>
+                    # <option>Voice</option>
+                    # <option>Clarinet</option>
+                # </select>
+                with gr.HTML(html_template="""
+                    <div class="fields">
+                        <label class="field">
+                            <span class="eyebrow field-label">Instrument</span>
+                        </label>
+                        @children
+                    </div>
+                    
+                """):
+                    instrument = gr.Dropdown(
+                        choices=INSTRUMENTS,
+                        value="Guitar",
+                        label="Instrument",
+                        interactive=True,
+                        show_label=True, 
+                        container=False   
+                    )
+                
+                # <select id="ages">
+                    #     <option>Child (6-12)</option>
+                    #     <option>Teen (13-18)</option>
+                    #     <option>Adult (18+)</option>
+                # </select>
+                with gr.HTML(html_template="""
+                    <div class="fields">     
+                        <label class="field">
+                            <span class="eyebrow field-label">Age Group</span>
+                        </label>
+                    </div>
 
-            gr.HTML("<div class='sec-label' style='padding:0 0 2px;'>Step 01</div>"
-                    "<div class='sec-title' style='padding:0 0 12px;'>Configure</div>")
-
-            instrument = gr.Dropdown(
-                choices=INSTRUMENTS,
-                value="Guitar",
-                label="Instrument",
-                interactive=True,
-                show_label=True,    
-            )
-
-            age_group = gr.Dropdown(
-                choices=AGE_GROUPS,
-                value="Adult (18+)",
-                label="Age Group",
-                interactive=True,
-            )
+                    <div class="actions">
+                        <button id="submit-btn" type="submit" class="btn-primary">
+                            <span id="submit-label">Analyze</span>
+                            <span aria-hidden="true">→</span>
+                        </button>
+                    </div>
+                """):
+                    age_group = gr.Dropdown(
+                        choices=AGE_GROUPS,
+                        value="Adult (18+)",
+                        label="Age Group",
+                        interactive=True,
+                        container=False
+                    )
 
             audio_input = gr.Audio(
                 sources=["microphone", "upload"],

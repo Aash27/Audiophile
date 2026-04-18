@@ -15,6 +15,8 @@
 	--shadow-paper: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 18px 40px -22px rgba(31, 26, 20, 0.18);
 	--shadow-frame: 0 0 0 1px var(--border), 0 30px 60px -30px rgba(31, 26, 20, 0.25);
 	--radius: 0.5rem;
+
+	--body-text-color: var(--cream);
 }
 
 * {
@@ -24,6 +26,7 @@ html,
 body {
 	margin: 0;
 	padding: 0;
+	color: var(--cream) !important;
 }
 
 body {
@@ -71,7 +74,7 @@ h3,
 
 #comma {
 	color: var(--gold);
-	font-size: 4rem;
+	font-size: 2rem;
 }
 
 .serif {
@@ -102,7 +105,6 @@ em {
 .eyebrow {
 	font-family: var(--sans);
 	text-transform: uppercase;
-	/* letter-spacing: 0.22em; */
 	font-size: 1rem;
 	color: var(--cream);
 }
@@ -247,6 +249,7 @@ em {
 /* Hero */
 .hero {
 	padding: 1rem;
+	color: var(--cream);
 }
 .hero h1 em {
 	color: var(--ink-soft);
@@ -294,6 +297,7 @@ em {
 }
 .step-title {
 	font-family: var(--sans);
+	color: var(--cream);
 	font-size: 1.125rem;
 	margin-top: 0.25rem;
 }
@@ -465,18 +469,18 @@ em {
 }
 .btn-primary {
 	display: inline-flex;
+	--body-text-color: var(--cream);
 	align-items: center;
 	gap: 0.75rem;
 	background: var(--cream);
-	color: var(--ink);
-	border: 0;
-	padding: 0.85rem 1.75rem;
-	border-radius: 999px;
-	font-size: 0.875rem;
-	font-weight: 500;
+	border: 0 !important;
+	padding: 0.85rem 1.75rem !important;
+	border-radius: 999px !important;
+	font-size: 0.875rem !important;
+	font-weight: 500 !important;
 	transition:
 		gap 150ms ease,
-		opacity 150ms ease;
+		opacity 150ms ease !important;
 }
 .btn-primary:hover {
 	gap: 1rem;
@@ -793,4 +797,19 @@ em {
 
 .hidden {
 	display: none !important;
+}
+
+/* ── Markdown / prose ── */
+.prose p,
+.prose li {
+	color: var(--cream) !important;
+	font-size: 14px !important;
+	line-height: 1.7 !important;
+}
+.prose strong {
+	color: #c8a96e !important;
+}
+.prose h3 {
+	font-family: 'Playfair Display', serif !important;
+	color: var(--cream) !important;
 }

@@ -139,35 +139,40 @@ def render_feedback_html(fb: dict, instrument: str, age_group: str):
     emoji = {"Guitar": "🎸", "Piano": "🎹", "Voice": "🎤", "Clarinet": "🎼"}.get(instrument,"🎵")
 
     return f"""
-<section class='feedback-card' style='padding:1.5rem;' aria-labelledby='feedback-title'>
-  <div class='sec-label' style='margin-top:0 !important;'>Performance feedback</div>
-  <h2 id='feedback-title' class='sec-title' style='margin-bottom:0.75rem !important;'>Practice notes for {instrument}</h2>
-  <p style='margin:0 0 1rem;color:var(--color-text-muted);font-size:var(--text-base);'>{emoji} Tailored for {age_group}</p>
-
-  <div style='display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0.9rem;margin-bottom:1rem;'>
-    <article class='stat-card' style='padding:1rem;text-align:center;'>
-      <div style='font-size:clamp(1.8rem,4vw,2.4rem);font-weight:800;color:{grade_col};line-height:1;'>{fb['accuracy']:.0f}%</div>
-      <div style='font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);margin-top:0.45rem;'>Pitch accuracy</div>
-    </article>
-    <article class='stat-card' style='padding:1rem;text-align:center;'>
-      <div style='font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;color:{_color("blue")};line-height:1;'>{fb['grade']}</div>
-      <div style='font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);margin-top:0.45rem;'>Intonation grade</div>
-    </article>
-    <article class='stat-card' style='padding:1rem;text-align:center;'>
-      <div style='font-size:clamp(1.1rem,2.6vw,1.45rem);font-weight:800;color:{cons_col};line-height:1.2;'>{fb['cons_label']}</div>
-      <div style='font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);margin-top:0.45rem;'>Consistency</div>
-    </article>
+<div style='font-family:Lato,sans-serif;background:#141417;border:1px solid #2a2a32;padding:28px;color:#f0ede6;'>
+  <div style='font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:3px;
+              text-transform:uppercase;color:#6b6b7a;margin-bottom:18px;'>
+    Performance Feedback · {emoji} {instrument} · {age_group}
   </div>
-
-  <section style='padding:1rem 1.1rem;border-radius:var(--radius-lg);background:color-mix(in srgb, var(--color-primary) 5%, var(--color-surface));border:1px solid var(--color-border);margin-bottom:1rem;' aria-label='Performance overview'>
-    <p style='margin:0;color:var(--color-text);font-size:var(--text-base);line-height:1.75;'>{fb['overview']}</p>
-  </section>
-
-  <section aria-label='Practice tips'>
-    <div style='font-size:var(--text-sm);font-weight:700;color:var(--color-text);margin-bottom:0.25rem;'>Suggested next steps</div>
-    <ul style='list-style:none;padding:0;margin:0;'>{tips_html}</ul>
-  </section>
-</section>
+  <!-- Score cards -->
+  <div style='display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;'>
+    <div style='background:#1c1c21;border:1px solid #2a2a32;padding:16px;text-align:center;'>
+      <div style='font-size:34px;font-weight:700;color:{grade_col};
+                  font-family:"JetBrains Mono",monospace;'>{fb["accuracy"]:.0f}%</div>
+      <div style='font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#6b6b7a;
+                  margin-top:4px;font-family:"JetBrains Mono",monospace;'>Pitch Accuracy</div>
+    </div>
+    <div style='background:#1c1c21;border:1px solid #2a2a32;padding:16px;text-align:center;'>
+      <div style='font-size:34px;font-weight:700;color:{_color("blue")};
+                  font-family:"JetBrains Mono",monospace;'>{fb["grade"]}</div>
+      <div style='font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#6b6b7a;
+                  margin-top:4px;font-family:"JetBrains Mono",monospace;'>Intonation Grade</div>
+    </div>
+    <div style='background:#1c1c21;border:1px solid #2a2a32;padding:16px;text-align:center;'>
+      <div style='font-size:26px;font-weight:700;color:{cons_col};
+                  font-family:"JetBrains Mono",monospace;'>{fb["cons_label"]}</div>
+      <div style='font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#6b6b7a;
+                  margin-top:4px;font-family:"JetBrains Mono",monospace;'>Consistency</div>
+    </div>
+  </div>
+  <!-- Overview block -->
+  <div style='background:#1c1c21;border:1px solid #2a2a32;border-left:3px solid #c8a96e;
+              padding:20px;margin-bottom:20px;'>
+    <p style='font-size:14px;line-height:1.8;color:#ccc9c0;margin:0;'>{fb["overview"]}</p>
+  </div>
+  <!-- Tips -->
+  {tips_html}
+</div>
 """
 
 
@@ -224,7 +229,7 @@ def build_demo():
 
                 with gr.Row():
 
-                    with gr.Column(scale=1):
+                    with gr.Column(scale=2):
 
                         gr.HTML("""
                             <div class="container layout">

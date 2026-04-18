@@ -810,8 +810,8 @@ em {
 .recital-dropdown .dropdown {
 	background: var(--cream) !important;
 	color: var(--taupe) !important;
-	border: 1px solid var(--line) !important;
-	border-radius: 3px !important;
+	/* border: 1px solid var(--line) !important;
+	border-radius: 3px !important; */
 	min-height: 44px !important;
 	box-shadow: none !important;
 }
@@ -856,8 +856,8 @@ em {
 .recital-dropdown .options,
 .recital-dropdown .menu {
 	background: var(--cream) !important;
-	border: 1px solid var(--line) !important;
-	border-radius: 6px !important;
+	/* border: 1px solid var(--line) !important; */
+	/* border-radius: 6px !important; */
 	box-shadow: none !important;
 }
 

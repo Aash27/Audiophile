@@ -240,7 +240,7 @@ def build_demo():
 
         # ── First tab - Input ──────────────────────────────────────
         with gr.Tab("Instruments and Audio"):
-            gr.HTML("""
+            with gr.HTML(html_template="""
                 <div class="container layout">
                     <!-- Instructions -->
                     <aside>
@@ -285,11 +285,7 @@ def build_demo():
                             <p>Your recording is held in the browser only — it never leaves this page. Refresh the tab and it is gone.</p>
                         </div>
                     </aside>
-                <div>
-            """)
-
-            with gr.HTML(html_template="""
-                <div class="container layout">
+                         
                     <!-- Form -->
                     <section>
                         <form id="submission-form" class="frame form" novalidate>
@@ -316,8 +312,8 @@ def build_demo():
                                     <button type="button" id="remove-file" class="remove-btn">Remove</button>
                                 </div>
                             </label>
+                            @children
                         </form>
-                        @children
                     </section>
                 </div>
             """) as form:
@@ -332,8 +328,8 @@ def build_demo():
                     <div class="fields">
                         <label class="field">
                             <span class="eyebrow field-label">Instrument</span>
+                            @children
                         </label>
-                        @children
                     </div>
                     
                 """):
@@ -355,6 +351,7 @@ def build_demo():
                     <div class="fields">     
                         <label class="field">
                             <span class="eyebrow field-label">Age Group</span>
+                            @children
                         </label>
                     </div>
 

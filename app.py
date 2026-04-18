@@ -416,11 +416,11 @@ def build_demo():
                 inputs=[audio_input, instrument, age_group],
                 outputs=[pitch_out, feedback_out],
             )
-
+        demo.load(None, None, None, js="select_option")
+    
     return demo
 
 
 if __name__ == "__main__":
     app = build_demo()
-    app.load(None, None, None, js="setup_select")
     app.launch(css_paths="styles.css", js=js)

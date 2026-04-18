@@ -230,8 +230,6 @@ def build_demo():
     """
 
     with gr.Blocks(css_paths="styles.css", js=js, title="Audiophile — Pitch Detection") as demo:
-
-
         # Header
         gr.HTML("""
             <!-- Masthead -->
@@ -419,7 +417,7 @@ def build_demo():
                 outputs=[pitch_out, feedback_out],
             )
 
-    return demo.load(None, None, None, js="setup_select")
+        return demo.load(None, None, None, js="setup_select")
 
 
 if __name__ == "__main__":

@@ -377,8 +377,8 @@ def build_demo():
                 instrument = gr.Textbox()
                 age_group = gr.Textbox()
 
-                hidden1.change(handle_change, inputs=hidden1, outputs=out1)
-                hidden2.change(handle_change, inputs=hidden2, outputs=out2)
+                hidden1.change(handle_change, inputs=hidden1, outputs=instrument)
+                hidden2.change(handle_change, inputs=hidden2, outputs=age_group)
 
                 audio_input = gr.Audio(
                     sources=["microphone", "upload"],

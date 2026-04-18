@@ -204,32 +204,32 @@ def analyze(audio_path, instrument, age_group):
 def handle_change(v):
     return v
 
+js = """
+function select_option() {
+    const instr_sel = document.getElementById("instr");
+    const age_sel = document.getElementById("ages")
+    const tb1 = document.querySelector("#first_hidden textarea, #first_hidden input")
+    const tb2 = document.querySelector("#second_hidden textarea, #second_hidden input")
+    if (!instr_sel || !age_sel || !tb) return;
+
+    instr_sel.addEventListener("change", () => {
+        tb1.value = instr_sel.value
+        tb1.dispatchEvent(new Event("input", { bubbles: true }));
+    })
+
+    age_sel.addEventListener("change", () => {
+        tb2.value = age_sel.value
+        tb2.dispatchEvent(new Event("input", { bubbles: true }));
+    })
+
+
+}
+"""
+
 # ── Gradio UI ────────────────────────────────────────────────────────────────
 def build_demo():
 
-    js = """
-    function select_option() {
-        const instr_sel = document.getElementById("instr");
-        const age_sel = document.getElementById("ages")
-        const tb1 = document.querySelector("#first_hidden textarea, #first_hidden input")
-        const tb2 = document.querySelector("#second_hidden textarea, #second_hidden input")
-        if (!instr_sel || !age_sel || !tb) return;
-
-        instr_sel.addEventListener("change", () => {
-            tb1.value = instr_sel.value
-            tb1.dispatchEvent(new Event("input", { bubbles: true }));
-        })
-
-        age_sel.addEventListener("change", () => {
-            tb2.value = age_sel.value
-            tb2.dispatchEvent(new Event("input", { bubbles: true }));
-        })
-
-
-    }
-    """
-
-    with gr.Blocks(css_paths="styles.css", js=js, title="Audiophile — Pitch Detection") as demo:
+    with gr.Blocks(title="Audiophile — Pitch Detection") as demo:
         # Header
         gr.HTML("""
             <!-- Masthead -->
@@ -417,9 +417,10 @@ def build_demo():
                 outputs=[pitch_out, feedback_out],
             )
 
-        return demo.load(None, None, None, js="setup_select")
+    return demo
 
 
 if __name__ == "__main__":
     app = build_demo()
-    app.launch()
+    app.load(None, None, None, js="setup_select")
+    app.launch(css_paths="styles.css", js=js)

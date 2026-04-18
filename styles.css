@@ -808,8 +808,9 @@ em {
 .recital-dropdown .wrap,
 .recital-dropdown .dropdown,
 .recital-dropdown select {
-	background: var(--cream) !important;
+	background-color: var(--cream) !important;
 	--body-text-color: var(--taupe) !important;
+	--border-color-primary: var(--ink);
 	border: 1px solid var(--line) !important;
 	border-radius: 3px !important;
 	box-shadow: none !important;

@@ -222,80 +222,86 @@ def build_demo():
             # ── First tab - Input ──────────────────────────────────────
             with gr.Tab("Instruments and Audio", elem_classes="tab-names"):
 
-                gr.HTML("""
-                    <div class="container layout">
-                        <!-- Instructions -->
-                        <aside>
-                            <div class="eyebrow" id="secondary">Instructions</div>
-                            <h2 id="left" class="serif" style="margin-top: 0.75rem">For your submission</h2>
-                            <hr class="rule" />
-                            <ol class="steps">
-                                <li class="step">
-                                    <div class="step-num">1</div>
-                                    <div>
-                                        <div class="step-title">Select your instrument and age group</div>
-                                    </div>
-                                </li>
-                                <li class="step">
-                                    <div class="step-num">2</div>
-                                    <div>
-                                        <div class="step-title">Click the mic to record, or upload an audio file</div>
-                                    </div>
-                                </li>
-                                <li class="step">
-                                    <div class="step-num">3</div>
-                                    <div>
-                                        <div class="step-title">Play a note or short phrase (2–5 seconds works well)</div>
-                                    </div>
-                                </li>
-                                <li class="step">
-                                    <div class="step-num">4</div>
-                                    <div>
-                                        <div class="step-title">Click 'Analyze' to run pitch detection</div>
-                                    </div>
-                                </li>
-                                <li class="step">
-                                    <div class="step-num">5</div>
-                                    <div>
-                                        <div class="step-title">Click 'Feedback' in top right to review</div>
-                                    </div>
-                                </li>
-                            </ol>
-
-                            <div class="paper note">
-                                <div class="eyebrow">A note on privacy</div>
-                                <p>Your recording is held in the browser only — it never leaves this page. Refresh the tab and it is gone.</p>
-                            </div>
-                        </aside>
-                """)
-
                 with gr.Row():
 
-                    instrument = gr.Dropdown(
-                        choices=INSTRUMENTS,
-                        value="Guitar",
-                        label="Instrument",
-                        interactive=True,
-                        elem_classes="recital-dropdowns"
-                    )
+                    with gr.Column(scale=1):
 
-                    age_group = gr.Dropdown(
-                        choices=AGE_GROUPS,
-                        value="Adult (18+)",
-                        label="Age Group",
-                        interactive=True,
-                        elem_classes="recital-dropdowns"
-                    )
+                        gr.HTML("""
+                            <div class="container layout">
+                                <!-- Instructions -->
+                                <aside>
+                                    <div class="eyebrow" id="secondary">Instructions</div>
+                                    <h2 id="left" class="serif" style="margin-top: 0.75rem">For your submission</h2>
+                                    <hr class="rule" />
+                                    <ol class="steps">
+                                        <li class="step">
+                                            <div class="step-num">1</div>
+                                            <div>
+                                                <div class="step-title">Select your instrument and age group</div>
+                                            </div>
+                                        </li>
+                                        <li class="step">
+                                            <div class="step-num">2</div>
+                                            <div>
+                                                <div class="step-title">Click the mic to record, or upload an audio file</div>
+                                            </div>
+                                        </li>
+                                        <li class="step">
+                                            <div class="step-num">3</div>
+                                            <div>
+                                                <div class="step-title">Play a note or short phrase (2–5 seconds works well)</div>
+                                            </div>
+                                        </li>
+                                        <li class="step">
+                                            <div class="step-num">4</div>
+                                            <div>
+                                                <div class="step-title">Click 'Analyze' to run pitch detection</div>
+                                            </div>
+                                        </li>
+                                        <li class="step">
+                                            <div class="step-num">5</div>
+                                            <div>
+                                                <div class="step-title">Click 'Feedback' in top right to review</div>
+                                            </div>
+                                        </li>
+                                    </ol>
 
-                audio_input = gr.Audio(
-                    sources=["microphone", "upload"],
-                    type="filepath",
-                    label="🎙️  Record or upload .wav / .mp3",
-                    format="wav",
-                    elem_classes="recital-dropdowns"
-                )
+                                    <div class="paper note">
+                                        <div class="eyebrow">A note on privacy</div>
+                                        <p>Your recording is held in the browser only — it never leaves this page. Refresh the tab and it is gone.</p>
+                                    </div>
+                                </aside>
+                        """)
 
-                analyze_btn = gr.Button("⚡  Analyze Performance", variant="primary")
+                    with gr.Column(scale = 2):
+                        
+                        with gr.Row():
+
+                            instrument = gr.Dropdown(
+                                choices=INSTRUMENTS,
+                                value="Guitar",
+                                label="Instrument",
+                                interactive=True,
+                                elem_classes="recital-dropdowns"
+                            )
+
+                            age_group = gr.Dropdown(
+                                choices=AGE_GROUPS,
+                                value="Adult (18+)",
+                                label="Age Group",
+                                interactive=True,
+                                elem_classes="recital-dropdowns"
+                            )
+
+                        audio_input = gr.Audio(
+                            sources=["microphone", "upload"],
+                            type="filepath",
+                            label="🎙️  Record or upload .wav / .mp3",
+                            format="wav",
+                            elem_classes="recital-dropdowns"
+                        )
+
+                        analyze_btn = gr.Button("⚡  Analyze Performance", variant="primary")
 
             # ── Second tab - Feedback ────────────────────────────────────
             with gr.Tab("Pitches and Feedback", elem_classes="tab-names"):

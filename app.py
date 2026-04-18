@@ -201,53 +201,10 @@ def analyze(audio_path, instrument, age_group):
 
     return pitch_html, fb_html
 
-def handle_change(v):
-    return v
-
-js = """
-function select_option() {
-    const instr_sel = document.getElementById("instr");
-    const age_sel = document.getElementById("ages")
-    const tb1 = document.querySelector("#first_hidden textarea, #first_hidden input")
-    const tb2 = document.querySelector("#second_hidden textarea, #second_hidden input")
-    if (!instr_sel || !age_sel || !tb) return;
-
-    instr_sel.addEventListener("change", () => {
-        tb1.value = instr_sel.value
-        tb1.dispatchEvent(new Event("input", { bubbles: true }));
-    })
-
-    age_sel.addEventListener("change", () => {
-        tb2.value = age_sel.value
-        tb2.dispatchEvent(new Event("input", { bubbles: true }));
-    })
-
-
-}
-"""
-
 # ── Gradio UI ────────────────────────────────────────────────────────────────
 def build_demo():
 
     with gr.Blocks(title="Audiophile — Pitch Detection") as demo:
-        # Header
-        gr.HTML("""
-            <!-- Masthead -->
-            <header class="masthead">
-                <div class="masthead-inner">
-                    <a class="brand" href="index.html">
-                        <span class="brand-mark">cv</span>
-                        <span>
-                            <span class="brand-name">Audiophile</span>
-                        </span>
-                    </a>
-                    <nav class="nav">
-                        <a href="index.html" class="active"><span class="gold-underline">Selection & Submission</span></a>
-                        <a href="feedback.html">Feedback</a>
-                    </nav>
-                </div>
-            </header>
-        """)
 
         # Hero
         gr.HTML("""
@@ -263,7 +220,7 @@ def build_demo():
         with gr.Tabs():
 
             # ── First tab - Input ──────────────────────────────────────
-            with gr.Tab("Instruments and Audio"):
+            with gr.Tab("Instruments and Audio", elem_classes="tab-names"):
 
                 gr.HTML("""
                     <div class="container layout">
@@ -310,85 +267,38 @@ def build_demo():
                                 <p>Your recording is held in the browser only — it never leaves this page. Refresh the tab and it is gone.</p>
                             </div>
                         </aside>
-                            
-                        <!-- Form -->
-                        <section>
-                            <form id="submission-form" class="frame form" novalidate>
-                                <div class="form-head">
-                                    <div>
-                                        <div class="eyebrow">Recording and Submission</div>
-                                        <h2 class="serif" id="left">Your recording</h2>
-                                    </div>
-                                    <span class="formats">mp3 · wav · m4a</span>
-                                </div>
-
-                                <hr class="rule" />
-
-                                <label id="dropzone" class="dropzone" for="file-input">
-                                    <input id="file-input" type="file" accept="audio/*" />
-                                    <div id="dz-empty">
-                                        <div class="dropzone-title">Place your recording here.</div>
-                                        <p class="dropzone-hint">Drag a file in, or <span class="gold-underline">browse your library</span>.</p>
-                                        <p class="dropzone-cap">up to 25 MB</p>
-                                    </div>
-                                    <div id="dz-filled" class="hidden">
-                                        <div class="file-name" id="file-name"></div>
-                                        <div class="file-meta" id="file-meta"></div>
-                                        <button type="button" id="remove-file" class="remove-btn">Remove</button>
-                                    </div>
-                                </label>
-                                
-                             
-                                <div class="fields>
-                                    <label class="field">
-                                        <span class="eyebrow field-label">Instrument</span>
-                                        <select id="instr">
-                                            <option>Guitar</option>
-                                            <option>Piano</option>
-                                            <option>Voice</option>
-                                            <option>Clarinet</option>
-                                        </select>
-                                    </label>
-                                    <label class="field">
-                                        <span class="eyebrow field-label">Age Group</span>
-                                        <select id="ages">
-                                            <option>Child (6-12)</option>
-                                            <option>Teen (13-18)</option>
-                                            <option>Adult (18+)</option>
-                                        </select>
-                                    </label>
-                                </div>
-                             
-                                <div class="actions">
-                                    <button id="submit-btn" type="submit" class="btn-primary">
-                                        <span id="submit-label">Analyze</span>
-                                        <span aria-hidden="true">→</span>
-                                    </button>
-                                </div>
-                            </form>
-                        </section>
-                    </div>
                 """)
 
-                hidden1 = gr.Textbox(visible=False, elem_id="first_hidden")
-                hidden2 = gr.Textbox(visible=False, elem_id="second_hidden")
-                instrument = gr.Textbox()
-                age_group = gr.Textbox()
+                with gr.Row():
 
-                hidden1.change(handle_change, inputs=hidden1, outputs=instrument)
-                hidden2.change(handle_change, inputs=hidden2, outputs=age_group)
+                    instrument = gr.Dropdown(
+                        choices=INSTRUMENTS,
+                        value="Guitar",
+                        label="Instrument",
+                        interactive=True,
+                        elem_classes="recital-dropdowns"
+                    )
+
+                    age_group = gr.Dropdown(
+                        choices=AGE_GROUPS,
+                        value="Adult (18+)",
+                        label="Age Group",
+                        interactive=True,
+                        elem_classes="recital-dropdowns"
+                    )
 
                 audio_input = gr.Audio(
                     sources=["microphone", "upload"],
                     type="filepath",
                     label="🎙️  Record or upload .wav / .mp3",
                     format="wav",
+                    elem_classes="recital-dropdowns"
                 )
 
                 analyze_btn = gr.Button("⚡  Analyze Performance", variant="primary")
 
             # ── Second tab - Feedback ────────────────────────────────────
-            with gr.Tab("Pitches and Feedback"):
+            with gr.Tab("Pitches and Feedback", elem_classes="tab-names"):
 
                 gr.HTML("<div class='sec-label' style='margin-top:16px;padding:0 0 2px;'>Step 03</div>"
                         "<div class='sec-title' style='padding:0 0 12px;'>Pitch Detection</div>")
@@ -416,11 +326,10 @@ def build_demo():
                 inputs=[audio_input, instrument, age_group],
                 outputs=[pitch_out, feedback_out],
             )
-        demo.load(None, None, None, js="select_option")
     
     return demo
 
 
 if __name__ == "__main__":
     app = build_demo()
-    app.launch(css_paths="styles.css", js=js)
+    app.launch(css_paths="styles.css")

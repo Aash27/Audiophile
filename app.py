@@ -201,11 +201,35 @@ def analyze(audio_path, instrument, age_group):
 
     return pitch_html, fb_html
 
+def handle_change(v):
+    return v
 
 # ── Gradio UI ────────────────────────────────────────────────────────────────
-
 def build_demo():
-    with gr.Blocks(css_paths="styles.css", title="Audiophile — Pitch Detection") as demo:
+
+    js = """
+    function select_option() {
+        const instr_sel = document.getElementById("instr");
+        const age_sel = document.getElementById("ages")
+        const tb1 = document.querySelector("#first_hidden textarea, #first_hidden input")
+        const tb2 = document.querySelector("#second_hidden textarea, #second_hidden input")
+        if (!instr_sel || !age_sel || !tb) return;
+
+        instr_sel.addEventListener("change", () => {
+            tb1.value = instr_sel.value
+            tb1.dispatchEvent(new Event("input", { bubbles: true }));
+        })
+
+        age_sel.addEventListener("change", () => {
+            tb2.value = age_sel.value
+            tb2.dispatchEvent(new Event("input", { bubbles: true }));
+        })
+
+
+    }
+    """
+
+    with gr.Blocks(css_paths="styles.css", js=js, title="Audiophile — Pitch Detection") as demo:
 
 
         # Header
@@ -238,178 +262,164 @@ def build_demo():
             </section>
         """)
 
-        # ── First tab - Input ──────────────────────────────────────
-        with gr.Tab("Instruments and Audio"):
-            with gr.HTML(html_template="""
-                <div class="container layout">
-                    <!-- Instructions -->
-                    <aside>
-                        <div class="eyebrow" id="secondary">Instructions</div>
-                        <h2 id="left" class="serif" style="margin-top: 0.75rem">For your submission</h2>
-                        <hr class="rule" />
-                        <ol class="steps">
-                            <li class="step">
-                                <div class="step-num">1</div>
-                                <div>
-                                    <div class="step-title">Select your instrument and age group</div>
-                                </div>
-                            </li>
-                            <li class="step">
-                                <div class="step-num">2</div>
-                                <div>
-                                    <div class="step-title">Click the mic to record, or upload an audio file</div>
-                                </div>
-                            </li>
-                            <li class="step">
-                                <div class="step-num">3</div>
-                                <div>
-                                    <div class="step-title">Play a note or short phrase (2–5 seconds works well)</div>
-                                </div>
-                            </li>
-                            <li class="step">
-                                <div class="step-num">4</div>
-                                <div>
-                                    <div class="step-title">Click 'Analyze' to run pitch detection</div>
-                                </div>
-                            </li>
-                            <li class="step">
-                                <div class="step-num">5</div>
-                                <div>
-                                    <div class="step-title">Click 'Feedback' in top right to review</div>
-                                </div>
-                            </li>
-                        </ol>
+        with gr.Tabs():
 
-                        <div class="paper note">
-                            <div class="eyebrow">A note on privacy</div>
-                            <p>Your recording is held in the browser only — it never leaves this page. Refresh the tab and it is gone.</p>
-                        </div>
-                    </aside>
-                         
-                    <!-- Form -->
-                    <section>
-                        <form id="submission-form" class="frame form" novalidate>
-                            <div class="form-head">
-                                <div>
-                                    <div class="eyebrow">Recording and Submission</div>
-                                    <h2 class="serif" id="left">Your recording</h2>
-                                </div>
-                                <span class="formats">mp3 · wav · m4a</span>
-                            </div>
+            # ── First tab - Input ──────────────────────────────────────
+            with gr.Tab("Instruments and Audio"):
 
+                gr.HTML("""
+                    <div class="container layout">
+                        <!-- Instructions -->
+                        <aside>
+                            <div class="eyebrow" id="secondary">Instructions</div>
+                            <h2 id="left" class="serif" style="margin-top: 0.75rem">For your submission</h2>
                             <hr class="rule" />
+                            <ol class="steps">
+                                <li class="step">
+                                    <div class="step-num">1</div>
+                                    <div>
+                                        <div class="step-title">Select your instrument and age group</div>
+                                    </div>
+                                </li>
+                                <li class="step">
+                                    <div class="step-num">2</div>
+                                    <div>
+                                        <div class="step-title">Click the mic to record, or upload an audio file</div>
+                                    </div>
+                                </li>
+                                <li class="step">
+                                    <div class="step-num">3</div>
+                                    <div>
+                                        <div class="step-title">Play a note or short phrase (2–5 seconds works well)</div>
+                                    </div>
+                                </li>
+                                <li class="step">
+                                    <div class="step-num">4</div>
+                                    <div>
+                                        <div class="step-title">Click 'Analyze' to run pitch detection</div>
+                                    </div>
+                                </li>
+                                <li class="step">
+                                    <div class="step-num">5</div>
+                                    <div>
+                                        <div class="step-title">Click 'Feedback' in top right to review</div>
+                                    </div>
+                                </li>
+                            </ol>
 
-                            <label id="dropzone" class="dropzone" for="file-input">
-                                <input id="file-input" type="file" accept="audio/*" />
-                                <div id="dz-empty">
-                                    <div class="dropzone-title">Place your recording here.</div>
-                                    <p class="dropzone-hint">Drag a file in, or <span class="gold-underline">browse your library</span>.</p>
-                                    <p class="dropzone-cap">up to 25 MB</p>
+                            <div class="paper note">
+                                <div class="eyebrow">A note on privacy</div>
+                                <p>Your recording is held in the browser only — it never leaves this page. Refresh the tab and it is gone.</p>
+                            </div>
+                        </aside>
+                            
+                        <!-- Form -->
+                        <section>
+                            <form id="submission-form" class="frame form" novalidate>
+                                <div class="form-head">
+                                    <div>
+                                        <div class="eyebrow">Recording and Submission</div>
+                                        <h2 class="serif" id="left">Your recording</h2>
+                                    </div>
+                                    <span class="formats">mp3 · wav · m4a</span>
                                 </div>
-                                <div id="dz-filled" class="hidden">
-                                    <div class="file-name" id="file-name"></div>
-                                    <div class="file-meta" id="file-meta"></div>
-                                    <button type="button" id="remove-file" class="remove-btn">Remove</button>
+
+                                <hr class="rule" />
+
+                                <label id="dropzone" class="dropzone" for="file-input">
+                                    <input id="file-input" type="file" accept="audio/*" />
+                                    <div id="dz-empty">
+                                        <div class="dropzone-title">Place your recording here.</div>
+                                        <p class="dropzone-hint">Drag a file in, or <span class="gold-underline">browse your library</span>.</p>
+                                        <p class="dropzone-cap">up to 25 MB</p>
+                                    </div>
+                                    <div id="dz-filled" class="hidden">
+                                        <div class="file-name" id="file-name"></div>
+                                        <div class="file-meta" id="file-meta"></div>
+                                        <button type="button" id="remove-file" class="remove-btn">Remove</button>
+                                    </div>
+                                </label>
+                                
+                             
+                                <div class="fields>
+                                    <label class="field">
+                                        <span class="eyebrow field-label">Instrument</span>
+                                        <select id="instr">
+                                            <option>Guitar</option>
+                                            <option>Piano</option>
+                                            <option>Voice</option>
+                                            <option>Clarinet</option>
+                                        </select>
+                                    </label>
+                                    <label class="field">
+                                        <span class="eyebrow field-label">Age Group</span>
+                                        <select id="ages">
+                                            <option>Child (6-12)</option>
+                                            <option>Teen (13-18)</option>
+                                            <option>Adult (18+)</option>
+                                        </select>
+                                    </label>
                                 </div>
-                            </label>
-                            @children
-                        </form>
-                    </section>
-                </div>
-            """) as form:
-                # Instruments
-                # <select id="instr">
-                    # <option>Guitar</option>
-                    # <option>Piano</option>
-                    # <option>Voice</option>
-                    # <option>Clarinet</option>
-                # </select>
-                with gr.HTML(html_template="""
-                    <div class="fields">
-                        <label class="field">
-                            <span class="eyebrow field-label">Instrument</span>
-                            @children
-                        </label>
+                             
+                                <div class="actions">
+                                    <button id="submit-btn" type="submit" class="btn-primary">
+                                        <span id="submit-label">Analyze</span>
+                                        <span aria-hidden="true">→</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </section>
                     </div>
-                    
-                """):
-                    instrument = gr.Dropdown(
-                        choices=INSTRUMENTS,
-                        value="Guitar",
-                        label="Instrument",
-                        interactive=True,
-                        show_label=True, 
-                        container=False   
-                    )
-                
-                # <select id="ages">
-                    #     <option>Child (6-12)</option>
-                    #     <option>Teen (13-18)</option>
-                    #     <option>Adult (18+)</option>
-                # </select>
-                with gr.HTML(html_template="""
-                    <div class="fields">     
-                        <label class="field">
-                            <span class="eyebrow field-label">Age Group</span>
-                            @children
-                        </label>
-                    </div>
+                """)
 
-                    <div class="actions">
-                        <button id="submit-btn" type="submit" class="btn-primary">
-                            <span id="submit-label">Analyze</span>
-                            <span aria-hidden="true">→</span>
-                        </button>
-                    </div>
-                """):
-                    age_group = gr.Dropdown(
-                        choices=AGE_GROUPS,
-                        value="Adult (18+)",
-                        label="Age Group",
-                        interactive=True,
-                        container=False
-                    )
+                hidden1 = gr.Textbox(visible=False, elem_id="first_hidden")
+                hidden2 = gr.Textbox(visible=False, elem_id="second_hidden")
+                instrument = gr.Textbox()
+                age_group = gr.Textbox()
 
-            audio_input = gr.Audio(
-                sources=["microphone", "upload"],
-                type="filepath",
-                label="🎙️  Record or upload .wav / .mp3",
-                format="wav",
+                hidden1.change(handle_change, inputs=hidden1, outputs=out1)
+                hidden2.change(handle_change, inputs=hidden2, outputs=out2)
+
+                audio_input = gr.Audio(
+                    sources=["microphone", "upload"],
+                    type="filepath",
+                    label="🎙️  Record or upload .wav / .mp3",
+                    format="wav",
+                )
+
+                analyze_btn = gr.Button("⚡  Analyze Performance", variant="primary")
+
+            # ── Second tab - Feedback ────────────────────────────────────
+            with gr.Tab("Pitches and Feedback"):
+
+                gr.HTML("<div class='sec-label' style='margin-top:16px;padding:0 0 2px;'>Step 03</div>"
+                        "<div class='sec-title' style='padding:0 0 12px;'>Pitch Detection</div>")
+
+                pitch_out = gr.HTML(
+                    value="<div style='background:#141417;border:1px solid #2a2a32;padding:40px;"
+                            "text-align:center;color:#6b6b7a;font-family:\"JetBrains Mono\",monospace;"
+                            "font-size:11px;letter-spacing:2px;'>"
+                            "Record or upload audio, then click Analyze.</div>"
+                )
+
+                gr.HTML("<div class='sec-label' style='margin-top:24px;padding:0 0 2px;'>Step 04</div>"
+                        "<div class='sec-title' style='padding:0 0 12px;'>Feedback</div>")
+
+                feedback_out = gr.HTML(
+                    value="<div style='background:#141417;border:1px solid #2a2a32;padding:40px;"
+                            "text-align:center;color:#6b6b7a;font-family:\"JetBrains Mono\",monospace;"
+                            "font-size:11px;letter-spacing:2px;'>"
+                            "Feedback will appear here after analysis.</div>"
+                )
+
+            # ── Wire up ──────────────────────────────────────────────────────
+            analyze_btn.click(
+                fn=analyze,
+                inputs=[audio_input, instrument, age_group],
+                outputs=[pitch_out, feedback_out],
             )
 
-            analyze_btn = gr.Button("⚡  Analyze Performance", variant="primary")
-
-        # ── Second tab - Feedback ────────────────────────────────────
-        with gr.Tab("Pitches and Feedback"):
-
-            gr.HTML("<div class='sec-label' style='margin-top:16px;padding:0 0 2px;'>Step 03</div>"
-                    "<div class='sec-title' style='padding:0 0 12px;'>Pitch Detection</div>")
-
-            pitch_out = gr.HTML(
-                value="<div style='background:#141417;border:1px solid #2a2a32;padding:40px;"
-                        "text-align:center;color:#6b6b7a;font-family:\"JetBrains Mono\",monospace;"
-                        "font-size:11px;letter-spacing:2px;'>"
-                        "Record or upload audio, then click Analyze.</div>"
-            )
-
-            gr.HTML("<div class='sec-label' style='margin-top:24px;padding:0 0 2px;'>Step 04</div>"
-                    "<div class='sec-title' style='padding:0 0 12px;'>Feedback</div>")
-
-            feedback_out = gr.HTML(
-                value="<div style='background:#141417;border:1px solid #2a2a32;padding:40px;"
-                        "text-align:center;color:#6b6b7a;font-family:\"JetBrains Mono\",monospace;"
-                        "font-size:11px;letter-spacing:2px;'>"
-                        "Feedback will appear here after analysis.</div>"
-            )
-
-        # ── Wire up ──────────────────────────────────────────────────────
-        analyze_btn.click(
-            fn=analyze,
-            inputs=[audio_input, instrument, age_group],
-            outputs=[pitch_out, feedback_out],
-        )
-
-    return demo
+    return demo.load(None, None, None, js="setup_select")
 
 
 if __name__ == "__main__":

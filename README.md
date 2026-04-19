@@ -32,6 +32,16 @@ The application is deployed on Hugging Face Spaces and integrates signal process
 7. Feedback is displayed in structured format  
 
 ---
+## Project Structure
+audiophile/  
+│  
+├── app.py  
+├── feedback.py  
+├── pitch_utils.py  
+├── instruments.py  
+├── requirements.txt 
+
+---
 
 ## Deployment (Hugging Face Spaces)
 

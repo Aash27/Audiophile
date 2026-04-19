@@ -63,61 +63,66 @@ def render_pitch_html(note, frequency, cents, accuracy, consistency, all_notes):
         chips_html = "<p style='margin:0;color:var(--color-text-muted);font-size:var(--text-sm);'>No additional notes were detected.</p>"
 
     return f"""
-<section class='pitch-card' style='padding:1.5rem;' aria-labelledby='pitch-results-title'>
-  <div class='sec-label' style='margin-top:0 !important;'>Pitch analysis</div>
-  <h2 id='pitch-results-title' class='sec-title' style='margin-bottom:1rem !important;'>Your recording at a glance</h2>
-
-  <div style='display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0.9rem;margin-bottom:1rem;'>
-    <article class='stat-card' style='padding:1rem;text-align:center;'>
-      <div style='font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);margin-bottom:0.5rem;'>Dominant note</div>
-      <div style='font-size:clamp(1.8rem,4vw,2.5rem);font-weight:800;color:{tune_col};line-height:1;'>{note}</div>
-      <div style='font-size:var(--text-xs);color:var(--color-text-faint);margin-top:0.35rem;'>Letter notation</div>
-    </article>
-    <article class='stat-card' style='padding:1rem;text-align:center;'>
-      <div style='font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);margin-bottom:0.5rem;'>Frequency</div>
-      <div style='font-size:clamp(1.7rem,4vw,2.3rem);font-weight:800;color:var(--color-text);line-height:1.1;'>{frequency:.1f}</div>
-      <div style='font-size:var(--text-xs);color:var(--color-text-faint);margin-top:0.35rem;'>Hz</div>
-    </article>
-    <article class='stat-card' style='padding:1rem;text-align:center;'>
-      <div style='font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);margin-bottom:0.5rem;'>Intonation</div>
-      <div style='font-size:clamp(1.1rem,2vw,1.35rem);font-weight:800;color:{tune_col};line-height:1.2;'>{tune_str}</div>
-      <div style='font-size:var(--text-xs);color:var(--color-text-faint);margin-top:0.35rem;'>{cents:+.1f} cents</div>
-    </article>
+<div style='font-family:Lato,sans-serif;background:#141417;border:1px solid #2a2a32;padding:28px;color:#f0ede6;'>
+  <div style='font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:3px;
+              text-transform:uppercase;color:#6b6b7a;margin-bottom:18px;'>
+    Pitch Analysis Results
   </div>
-
-  <section class='feedback-card' style='padding:1rem 1rem 1.1rem;margin-bottom:1rem;' aria-label='Pitch meter'>
-    <div style='display:flex;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);margin-bottom:0.75rem;'>
-      <span>Flat</span><span>In tune</span><span>Sharp</span>
+  <!-- Stat cards -->
+  <div style='display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;'>
+    <div style='background:#1c1c21;border:1px solid #2a2a32;padding:16px;text-align:center;'>
+      <div style='font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#6b6b7a;margin-bottom:8px;font-family:"JetBrains Mono",monospace;'>Dominant Note</div>
+      <div style='font-size:32px;font-weight:700;color:{tune_col};font-family:"JetBrains Mono",monospace;'>{note}</div>
+      <div style='font-size:10px;color:#6b6b7a;margin-top:4px;font-family:"JetBrains Mono",monospace;'>Letter Notation</div>
     </div>
-    <div style='position:relative;height:0.85rem;background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:999px;overflow:hidden;'>
-      <div style='position:absolute;top:0;bottom:0;left:50%;width:2px;background:var(--color-text-faint);transform:translateX(-50%);opacity:.55;'></div>
-      <div style='position:absolute;inset:0;background:linear-gradient(90deg, color-mix(in srgb, {tune_col} 12%, transparent), transparent 35%, transparent 65%, color-mix(in srgb, {tune_col} 12%, transparent));'></div>
-      <div aria-hidden='true' style='position:absolute;top:-0.25rem;left:{needle_pct:.0f}%;width:0.35rem;height:1.35rem;background:{tune_col};border-radius:999px;transform:translateX(-50%);box-shadow:0 0 0 3px color-mix(in srgb, {tune_col} 18%, transparent);'></div>
+    <div style='background:#1c1c21;border:1px solid #2a2a32;padding:16px;text-align:center;'>
+      <div style='font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#6b6b7a;margin-bottom:8px;font-family:"JetBrains Mono",monospace;'>Frequency</div>
+      <div style='font-size:28px;font-weight:700;color:#f0ede6;font-family:"JetBrains Mono",monospace;'>{frequency:.1f}</div>
+      <div style='font-size:10px;color:#6b6b7a;margin-top:4px;font-family:"JetBrains Mono",monospace;'>Hz</div>
     </div>
-  </section>
-
-  <div style='display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:0.9rem;margin-bottom:1rem;'>
-    <article class='stat-card' style='padding:1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;'>
-      <div>
-        <div style='font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);'>Pitch accuracy</div>
-        <div style='font-size:var(--text-xs);color:var(--color-text-faint);margin-top:0.25rem;'>Overall tuning score</div>
-      </div>
-      <div style='font-size:clamp(1.4rem,3vw,2rem);font-weight:800;color:{grade_col};'>{accuracy:.0f}%</div>
-    </article>
-    <article class='stat-card' style='padding:1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;'>
-      <div>
-        <div style='font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);'>Consistency</div>
-        <div style='font-size:var(--text-xs);color:var(--color-text-faint);margin-top:0.25rem;'>Stability across the take</div>
-      </div>
-      <div style='font-size:clamp(1.2rem,2.8vw,1.7rem);font-weight:800;color:{cons_col};'>{cons_lbl}</div>
-    </article>
+    <div style='background:#1c1c21;border:1px solid #2a2a32;padding:16px;text-align:center;'>
+      <div style='font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#6b6b7a;margin-bottom:8px;font-family:"JetBrains Mono",monospace;'>Intonation</div>
+      <div style='font-size:18px;font-weight:700;color:{tune_col};font-family:"JetBrains Mono",monospace;'>{tune_str}</div>
+    </div>
   </div>
-
-  <section class='feedback-card' style='padding:1rem;' aria-label='All detected notes'>
-    <div style='font-size:var(--text-sm);font-weight:700;color:var(--color-text);margin-bottom:0.75rem;'>Detected notes</div>
-    <div>{chips_html}</div>
-  </section>
-</section>
+  <!-- Tuner meter -->
+  <div style='background:#1c1c21;border:1px solid #2a2a32;padding:16px;margin-bottom:20px;'>
+    <div style='display:flex;justify-content:space-between;font-family:"JetBrains Mono",monospace;
+                font-size:9px;letter-spacing:2px;color:#6b6b7a;margin-bottom:12px;'>
+      <span>♭ Flat</span><span>● In Tune</span><span>Sharp ♯</span>
+    </div>
+    <div style='position:relative;height:10px;background:#2a2a32;border-radius:5px;'>
+      <div style='position:absolute;top:-4px;bottom:-4px;left:50%;width:2px;
+                  background:rgba(255,255,255,.2);transform:translateX(-50%);'></div>
+      <div style='position:absolute;top:-6px;left:{needle_pct:.0f}%;width:4px;height:22px;
+                  background:{tune_col};border-radius:2px;transform:translateX(-50%);
+                  box-shadow:0 0 8px {tune_col};'></div>
+    </div>
+  </div>
+  <!-- Score row -->
+  <div style='display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;'>
+    <div style='background:#1c1c21;border:1px solid #2a2a32;padding:14px;display:flex;
+                align-items:center;justify-content:space-between;'>
+      <span style='font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:2px;
+                   text-transform:uppercase;color:#6b6b7a;'>Pitch Accuracy</span>
+      <span style='font-family:"JetBrains Mono",monospace;font-size:22px;font-weight:700;
+                   color:{grade_col};'>{accuracy:.0f}%</span>
+    </div>
+    <div style='background:#1c1c21;border:1px solid #2a2a32;padding:14px;display:flex;
+                align-items:center;justify-content:space-between;'>
+      <span style='font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:2px;
+                   text-transform:uppercase;color:#6b6b7a;'>Consistency</span>
+      <span style='font-family:"JetBrains Mono",monospace;font-size:22px;font-weight:700;
+                   color:{cons_col};'>{cons_lbl}</span>
+    </div>
+  </div>
+  <!-- All notes -->
+  <div style='font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:2px;
+              text-transform:uppercase;color:#6b6b7a;margin-bottom:8px;'>
+    All Notes Detected
+  </div>
+  <div style='margin-bottom:4px;'>{chips_html}</div>
+</div>
 """
 
 
@@ -225,7 +230,7 @@ def build_demo():
         with gr.Tabs():
 
             # ── First tab - Input ──────────────────────────────────────
-            with gr.Tab("Instruments and Audio", elem_classes="tab-names"):
+            with gr.Tab("Instruments and Audio", elem_classes="recital-tabs"):
 
                 with gr.Row():
 
@@ -309,7 +314,7 @@ def build_demo():
                         analyze_btn = gr.Button("⚡  Analyze Performance", variant="primary")
 
             # ── Second tab - Feedback ────────────────────────────────────
-            with gr.Tab("Pitches and Feedback", elem_classes="tab-names"):
+            with gr.Tab("Pitches and Feedback", elem_classes="recital-tabs"):
 
                 gr.HTML("<div class='sec-label' style='margin-top:16px;padding:0 0 2px;'>Step 03</div>"
                         "<div class='sec-title' style='padding:0 0 12px;'>Pitch Detection</div>")

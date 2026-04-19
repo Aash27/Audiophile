@@ -1,3 +1,8 @@
+"""
+app.py  —  Audiophile  |  Hugging Face Spaces
+Full pitch detection + age-adjusted feedback demo.
+"""
+
 import gradio as gr
 from pitch_utils import detect_pitch_and_note
 from feedback import generate_feedback
@@ -8,178 +13,22 @@ INSTRUMENTS = list(INSTRUMENT_RANGES.keys())
 AGE_GROUPS  = ["Child (6-12)", "Teen (13-18)", "Adult (18+)"]
 
 EMOJIS = {
-    "Guitar": "🎸",
-    "Piano": "🎹",
-    "Clarinet": "🎶",
-    "Violin": "🎻",
-    "Flute": "🪈",
-    "Voice": "🎤",
+    "Guitar": "🎸", "Piano": "🎹", "Voice": "🎤", "Clarinet": "🎼"
 }
 
-CSS = """
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&family=JetBrains+Mono:wght@400;600&display=swap');
-
-/* ── Global ── */
-*, *::before, *::after { box-sizing: border-box; }
-
-body, .gradio-container, #root {
-    background: #0d0d0f !important;
-    color: #f0ede6 !important;
-    font-family: 'Lato', sans-serif !important;
-}
-
-footer { display: none !important; }
-
-/* ── Header ── */
-#audiophile-header {
-    background:
-        linear-gradient(rgba(10,7,4,0.80), rgba(10,7,4,0.80)),
-        url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=1400&q=80')
-        center / cover no-repeat;
-    padding: 52px 40px 44px;
-    text-align: center;
-    border-bottom: 1px solid #2a2a32;
-    margin-bottom: 0;
-}
-#audiophile-header h1 {
-    font-family: 'Playfair Display', serif !important;
-    font-size: clamp(28px, 4vw, 52px);
-    font-weight: 400;
-    color: #f0ede6;
-    margin: 0 0 8px;
-}
-#audiophile-header h1 span { font-style: italic; color: #c8a96e; }
-#audiophile-header p {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    color: #a89880;
-    font-size: 17px;
-    margin: 0;
-}
-
-/* ── Section labels ── */
-.sec-label {
-    font-family: 'JetBrains Mono', monospace !important;
-    font-size: 9px !important;
-    letter-spacing: 3px !important;
-    text-transform: uppercase !important;
-    color: #6b6b7a !important;
-    margin-bottom: 6px !important;
-}
-.sec-title {
-    font-family: 'Playfair Display', serif !important;
-    font-size: 20px !important;
-    color: #f0ede6 !important;
-    margin-bottom: 4px !important;
-}
-
-/* ── Gradio panels / boxes ── */
-.gr-panel, .gr-box, .gr-form, .panel,
-div[data-testid="column"],
-.block, .prose {
-    background: #141417 !important;
-    border-color: #2a2a32 !important;
-    border-radius: 0 !important;
-}
-
-/* ── Labels ── */
-label, .label-wrap span, .svelte-1gfkn6j {
-    font-family: 'JetBrains Mono', monospace !important;
-    font-size: 10px !important;
-    letter-spacing: 2px !important;
-    text-transform: uppercase !important;
-    color: #a89880 !important;
-}
-
-/* ── Inputs / dropdowns ── */
-input, select, textarea,
-.gr-dropdown select,
-.wrap select {
-    background: #1c1c21 !important;
-    border: 1px solid #2a2a32 !important;
-    border-radius: 0 !important;
-    color: #f0ede6 !important;
-    font-family: 'Lato', sans-serif !important;
-    font-size: 14px !important;
-}
-input:focus, select:focus { border-color: #c8a96e !important; outline: none !important; }
-
-/* ── Buttons ── */
-button.primary, .primary {
-    background: #c8a96e !important;
-    color: #0d0d0f !important;
-    border: none !important;
-    border-radius: 0 !important;
-    font-family: 'Lato', sans-serif !important;
-    font-weight: 700 !important;
-    letter-spacing: 3px !important;
-    text-transform: uppercase !important;
-    font-size: 12px !important;
-    transition: box-shadow .2s !important;
-}
-button.primary:hover { box-shadow: 0 0 20px rgba(200,169,110,.35) !important; }
-
-button.secondary {
-    background: transparent !important;
-    color: #f0ede6 !important;
-    border: 1px solid #2a2a32 !important;
-    border-radius: 0 !important;
-    font-family: 'Lato', sans-serif !important;
-    letter-spacing: 2px !important;
-    text-transform: uppercase !important;
-    font-size: 12px !important;
-}
-button.secondary:hover { border-color: #a89880 !important; }
-
-/* ── Audio recorder ── */
-.audio-recorder, [data-testid="audio"] {
-    background: #1c1c21 !important;
-    border: 1px solid #2a2a32 !important;
-    border-radius: 0 !important;
-}
-
-/* ── Output HTML ── */
-.output-html, [data-testid="html"] {
-    background: transparent !important;
-    border: none !important;
-    padding: 0 !important;
-}
-
-/* ── Tabs ── */
-.tab-nav {
-    background: #141417 !important;
-    border-bottom: 1px solid #2a2a32 !important;
-}
-.tab-nav button {
-    font-family: 'JetBrains Mono', monospace !important;
-    font-size: 10px !important;
-    letter-spacing: 2px !important;
-    text-transform: uppercase !important;
-    color: #6b6b7a !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-}
-.tab-nav button.selected {
-    color: #c8a96e !important;
-    border-bottom: 2px solid #c8a96e !important;
-}
-
-/* ── Markdown / prose ── */
-.prose p, .prose li { color: #d0cdc5 !important; font-size: 14px !important; line-height: 1.7 !important; }
-.prose strong { color: #c8a96e !important; }
-.prose h3 { font-family: 'Playfair Display', serif !important; color: #f0ede6 !important; }
-"""
-
+# ── CSS ──────────────────────────────────────────────────────────────────────
+# with open("styles.css", "r") as f:
+#     CSS = f.read()
 
 # ── HTML builders ────────────────────────────────────────────────────────────
 
 def _color(key):
     return {
-        "green": "#4ecb8d",
-        "red":   "#d9534f",
-        "blue":  "#5b9bd5",
-        "gold":  "#c8a96e",
-        "muted": "#6b6b7a",
+        "green": "#2f6f3e",
+        "red":   "#a13030",
+        "blue":  "#1d4ed8",
+        "gold":  "#9a5b16",
+        "muted": "#475569",
     }.get(key, "#f0ede6")
 
 
@@ -206,22 +55,19 @@ def render_pitch_html(note, frequency, cents, accuracy, consistency, all_notes):
     if all_notes:
         total = sum(c for _, c in all_notes)
         for n, cnt in all_notes:
-            pct = cnt / total * 100
+            pct = cnt / total * 100 if total else 0
             chips_html += (
-                f"<span style='border:1px solid #2a2a32;color:#a89880;"
-                f"padding:3px 12px;font-family:JetBrains Mono,monospace;"
-                f"font-size:11px;letter-spacing:1px;margin:2px;display:inline-block;'>"
-                f"{n} <span style='opacity:.5;font-size:9px'>{pct:.0f}%</span></span>"
+                f"<span class='chip' style='margin:0.25rem;'>{n} <span style='opacity:.75;font-weight:600;'>{pct:.0f}%</span></span>"
             )
+    else:
+        chips_html = "<p style='margin:0;color:var(--color-text-muted);font-size:var(--text-sm);'>No additional notes were detected.</p>"
 
     return f"""
 <div style='font-family:Lato,sans-serif;background:#141417;border:1px solid #2a2a32;padding:28px;color:#f0ede6;'>
-
   <div style='font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:3px;
               text-transform:uppercase;color:#6b6b7a;margin-bottom:18px;'>
     Pitch Analysis Results
   </div>
-
   <!-- Stat cards -->
   <div style='display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;'>
     <div style='background:#1c1c21;border:1px solid #2a2a32;padding:16px;text-align:center;'>
@@ -239,7 +85,6 @@ def render_pitch_html(note, frequency, cents, accuracy, consistency, all_notes):
       <div style='font-size:18px;font-weight:700;color:{tune_col};font-family:"JetBrains Mono",monospace;'>{tune_str}</div>
     </div>
   </div>
-
   <!-- Tuner meter -->
   <div style='background:#1c1c21;border:1px solid #2a2a32;padding:16px;margin-bottom:20px;'>
     <div style='display:flex;justify-content:space-between;font-family:"JetBrains Mono",monospace;
@@ -254,7 +99,6 @@ def render_pitch_html(note, frequency, cents, accuracy, consistency, all_notes):
                   box-shadow:0 0 8px {tune_col};'></div>
     </div>
   </div>
-
   <!-- Score row -->
   <div style='display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;'>
     <div style='background:#1c1c21;border:1px solid #2a2a32;padding:14px;display:flex;
@@ -272,14 +116,12 @@ def render_pitch_html(note, frequency, cents, accuracy, consistency, all_notes):
                    color:{cons_col};'>{cons_lbl}</span>
     </div>
   </div>
-
   <!-- All notes -->
   <div style='font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:2px;
               text-transform:uppercase;color:#6b6b7a;margin-bottom:8px;'>
     All Notes Detected
   </div>
   <div style='margin-bottom:4px;'>{chips_html}</div>
-
 </div>
 """
 
@@ -295,29 +137,19 @@ def render_feedback_html(fb: dict, instrument: str, age_group: str):
     for tip in fb["tips"]:
         col = _color(tip["color"])
         tips_html += (
-            f"<div style='display:flex;gap:12px;font-size:13px;line-height:1.6;"
-            f"color:#b0ab9f;margin-bottom:10px;align-items:flex-start;'>"
-            f"<span style='color:{col};font-weight:700;flex-shrink:0;margin-top:1px;'>"
-            f"{tip['icon']}</span>"
-            f"<span>{tip['text']}</span></div>"
+            f"<li style='display:flex;gap:0.75rem;align-items:flex-start;padding:0.9rem 0;border-top:1px solid var(--color-divider);'>"
+            f"<span aria-hidden='true' style='display:inline-flex;align-items:center;justify-content:center;min-width:2rem;height:2rem;border-radius:999px;background:color-mix(in srgb, {col} 14%, var(--color-surface));color:{col};font-weight:800;'>{tip['icon']}</span>"
+            f"<span style='color:var(--color-text);font-size:var(--text-base);line-height:1.65;'>{tip['text']}</span></li>"
         )
 
-    emoji = {
-    "Guitar": "🎸",
-    "Piano": "🎹",
-    "Clarinet": "🎶",
-    "Violin": "🎻",
-    "Flute": "🪈"}.get(instrument, "🎵")
+    emoji = {"Guitar": "🎸", "Piano": "🎹", "Voice": "🎤", "Clarinet": "🎼"}.get(instrument,"🎵")
 
-    
     return f"""
 <div style='font-family:Lato,sans-serif;background:#141417;border:1px solid #2a2a32;padding:28px;color:#f0ede6;'>
-
   <div style='font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:3px;
               text-transform:uppercase;color:#6b6b7a;margin-bottom:18px;'>
     Performance Feedback · {emoji} {instrument} · {age_group}
   </div>
-
   <!-- Score cards -->
   <div style='display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;'>
     <div style='background:#1c1c21;border:1px solid #2a2a32;padding:16px;text-align:center;'>
@@ -339,16 +171,13 @@ def render_feedback_html(fb: dict, instrument: str, age_group: str):
                   margin-top:4px;font-family:"JetBrains Mono",monospace;'>Consistency</div>
     </div>
   </div>
-
   <!-- Overview block -->
   <div style='background:#1c1c21;border:1px solid #2a2a32;border-left:3px solid #c8a96e;
               padding:20px;margin-bottom:20px;'>
     <p style='font-size:14px;line-height:1.8;color:#ccc9c0;margin:0;'>{fb["overview"]}</p>
   </div>
-
   <!-- Tips -->
   {tips_html}
-
 </div>
 """
 
@@ -357,7 +186,7 @@ def render_feedback_html(fb: dict, instrument: str, age_group: str):
 
 def analyze(audio_path, instrument, age_group):
     """Called by Gradio on every Submit click."""
-
+    
     if audio_path is None:
         empty = "<div style='background:#141417;border:1px solid #2a2a32;padding:40px;" \
                 "text-align:center;color:#6b6b7a;font-family:JetBrains Mono,monospace;" \
@@ -383,81 +212,118 @@ def analyze(audio_path, instrument, age_group):
 
     return pitch_html, fb_html
 
-
 # ── Gradio UI ────────────────────────────────────────────────────────────────
-
 def build_demo():
-    with gr.Blocks(css=CSS, title="Audiophile — Pitch Detection") as demo:
 
-        # Header
+    with gr.Blocks(title="Audiophile — Pitch Detection") as demo:
+
+        # Hero
         gr.HTML("""
-        <div id="audiophile-header">
-          <h1>Audio<span>phile</span></h1>
-          <p></p>
-        </div>
+            <section class="container hero center">
+                <h1 style="margin-top: 1.5rem; font-size: 5vw">
+                    <span class="sans">Audiophile</span>,<br />
+                    <em id="comma">for the love of Music</em>
+                </h1>
+                <p>Submit or record a single recording and receive feedback.</p>
+            </section>
         """)
 
-        with gr.Row():
+        with gr.Tabs():
 
-            # ── Left column: inputs ──────────────────────────────────────
-            with gr.Column(scale=1):
+            # ── First tab - Input ──────────────────────────────────────
+            with gr.Tab("Instruments and Audio", elem_classes="recital-tabs"):
 
-                gr.HTML("""
-                <div style='background:#1c1c21;border:1px solid #2a2a32;padding:16px;
-                            margin-top:16px;margin-bottom:20px;'>
-                  <div style='font-family:"JetBrains Mono",monospace;font-size:9px;
-                              letter-spacing:2px;text-transform:uppercase;color:#6b6b7a;
-                              margin-bottom:10px;'>How to use</div>
-                  <div style='font-size:13px;color:#a89880;line-height:1.8;'>
-                    ① Select your instrument and age group<br>
-                    ② Click the mic to record, or upload an audio file<br>
-                    ③ Play a note or short phrase<br>
-                    ④ Click <strong style='color:#c8a96e;'>Analyze</strong> to run pitch detection<br>
-                    ⑤ Review pitch data and your personalized feedback
-                  </div>
-                </div>
-                """)
+                with gr.Row():
 
-                gr.HTML("<div class='sec-label' style='padding:0 0 2px;'>Step 01</div>"
-                        "<div class='sec-title' style='padding:0 0 12px;'>Configure</div>")
+                    with gr.Column(scale=2):
 
-                instrument = gr.Dropdown(
-                    choices=INSTRUMENTS,
-                    value="Guitar",
-                    label="Instrument",
-                    interactive=True,
-                )
+                        gr.HTML("""
+                            <div class="container layout">
+                                <!-- Instructions -->
+                                <aside>
+                                    <div class="eyebrow" id="secondary">Instructions</div>
+                                    <h2 id="left" class="serif" style="margin-top: 0.75rem">For your submission</h2>
+                                    <hr class="rule" />
+                                    <ol class="steps">
+                                        <li class="step">
+                                            <div class="step-num">1</div>
+                                            <div>
+                                                <div class="step-title">Select your instrument and age group</div>
+                                            </div>
+                                        </li>
+                                        <li class="step">
+                                            <div class="step-num">2</div>
+                                            <div>
+                                                <div class="step-title">Click the mic to record, or upload an audio file</div>
+                                            </div>
+                                        </li>
+                                        <li class="step">
+                                            <div class="step-num">3</div>
+                                            <div>
+                                                <div class="step-title">Play a note or short phrase (2–5 seconds works well)</div>
+                                            </div>
+                                        </li>
+                                        <li class="step">
+                                            <div class="step-num">4</div>
+                                            <div>
+                                                <div class="step-title">Click 'Analyze' to run pitch detection</div>
+                                            </div>
+                                        </li>
+                                        <li class="step">
+                                            <div class="step-num">5</div>
+                                            <div>
+                                                <div class="step-title">Click 'Feedback' in top right to review</div>
+                                            </div>
+                                        </li>
+                                    </ol>
 
-                age_group = gr.Dropdown(
-                    choices=AGE_GROUPS,
-                    value="Adult (18+)",
-                    label="Age Group",
-                    interactive=True,
-                )
+                                    <div class="paper note">
+                                        <div class="eyebrow">A note on privacy</div>
+                                        <p>Your recording is held in the browser only — it never leaves this page. Refresh the tab and it is gone.</p>
+                                    </div>
+                                </aside>
+                        """)
 
-                gr.HTML("<div class='sec-label' style='margin-top:24px;padding:0 0 2px;'>Step 02</div>"
-                        "<div class='sec-title' style='padding:0 0 12px;'>Record or Upload</div>")
+                    with gr.Column(scale=1):
 
-                audio_input = gr.Audio(
-                    sources=["microphone", "upload"],
-                    type="filepath",
-                    label="🎙️  Record or upload .wav / .mp3",
-                    format="wav",
-                )
+                        with gr.Row():
 
-                analyze_btn = gr.Button("⚡  Analyze Performance", variant="primary")
+                            instrument = gr.Dropdown(
+                                choices=INSTRUMENTS,
+                                value="Guitar",
+                                label="Instrument",
+                                interactive=True,
+                                elem_classes="recital-dropdown"
+                            )
 
-            # ── Right column: outputs ────────────────────────────────────
-            with gr.Column(scale=1):
+                            age_group = gr.Dropdown(
+                                choices=AGE_GROUPS,
+                                value="Adult (18+)",
+                                label="Age Group",
+                                interactive=True,
+                                elem_classes="recital-dropdown"
+                            )
+
+                        audio_input = gr.Audio(
+                            sources=["microphone", "upload"],
+                            type="filepath",
+                            label="🎙️  Record or upload .wav / .mp3",
+                            format="wav",
+                        )
+
+                        analyze_btn = gr.Button("⚡  Analyze Performance", variant="primary")
+
+            # ── Second tab - Feedback ────────────────────────────────────
+            with gr.Tab("Pitches and Feedback", elem_classes="recital-tabs"):
 
                 gr.HTML("<div class='sec-label' style='margin-top:16px;padding:0 0 2px;'>Step 03</div>"
                         "<div class='sec-title' style='padding:0 0 12px;'>Pitch Detection</div>")
 
                 pitch_out = gr.HTML(
                     value="<div style='background:#141417;border:1px solid #2a2a32;padding:40px;"
-                          "text-align:center;color:#6b6b7a;font-family:\"JetBrains Mono\",monospace;"
-                          "font-size:11px;letter-spacing:2px;'>"
-                          "Record or upload audio, then click Analyze.</div>"
+                            "text-align:center;color:#6b6b7a;font-family:\"JetBrains Mono\",monospace;"
+                            "font-size:11px;letter-spacing:2px;'>"
+                            "Record or upload audio, then click Analyze.</div>"
                 )
 
                 gr.HTML("<div class='sec-label' style='margin-top:24px;padding:0 0 2px;'>Step 04</div>"
@@ -465,21 +331,21 @@ def build_demo():
 
                 feedback_out = gr.HTML(
                     value="<div style='background:#141417;border:1px solid #2a2a32;padding:40px;"
-                          "text-align:center;color:#6b6b7a;font-family:\"JetBrains Mono\",monospace;"
-                          "font-size:11px;letter-spacing:2px;'>"
-                          "Feedback will appear here after analysis.</div>"
+                            "text-align:center;color:#6b6b7a;font-family:\"JetBrains Mono\",monospace;"
+                            "font-size:11px;letter-spacing:2px;'>"
+                            "Feedback will appear here after analysis.</div>"
                 )
 
-        # ── Wire up ──────────────────────────────────────────────────────
-        analyze_btn.click(
-            fn=analyze,
-            inputs=[audio_input, instrument, age_group],
-            outputs=[pitch_out, feedback_out],
-        )
-
+            # ── Wire up ──────────────────────────────────────────────────────
+            analyze_btn.click(
+                fn=analyze,
+                inputs=[audio_input, instrument, age_group],
+                outputs=[pitch_out, feedback_out],
+            )
+    
     return demo
 
 
 if __name__ == "__main__":
     app = build_demo()
-    app.launch()
+    app.launch(css_paths="styles.css")

@@ -44,11 +44,11 @@ This project runs on Hugging Face Spaces using Gradio.
 4. Restart the Space  
 
 ### Required Files
-app.py  
-feedback.py  
-pitch_utils.py  
-instruments.py  
-requirements.txt  
+- app.py  
+- feedback.py  
+- pitch_utils.py  
+- instruments.py  
+- requirements.txt  
 
 ---
 

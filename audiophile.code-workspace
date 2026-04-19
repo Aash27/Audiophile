@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../repos/Audiophile/Planning"
+		},
+		{
+			"path": "../../Downloads/cantabile-static"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "cantabile-static"
+	}
+}

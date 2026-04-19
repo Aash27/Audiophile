@@ -190,7 +190,6 @@ def analyze(audio_path, instrument, age_group):
     return pitch_html, fb_html
 
 
-
 def build_demo():
 
     with gr.Blocks(title="Audiophile — Pitch Detection") as demo:
@@ -239,12 +238,12 @@ def build_demo():
                                     </li>
                                     <li class="step">
                                         <div class="step-num">5</div>
-                                        <div><div class="step-title">Click the button below to view your results</div></div>
+                                        <div><div class="step-title">Results will appear in the Pitches and Feedback tab</div></div>
                                     </li>
                                 </ol>
                                 <div class="paper note">
                                     <div class="eyebrow">A note on privacy</div>
-                                    <p>Your recording is held in the browser only — it never leaves this page. Refresh the tab and it is gone.</p>
+                                    <p>Your recording is held in the browser only - it never leaves this page. Refresh the tab and it is gone.</p>
                                 </div>
                             </aside>
                         """)
@@ -276,7 +275,6 @@ def build_demo():
                         )
 
                         analyze_btn = gr.Button("Analyze Performance", variant="primary")
-                        
 
             # Tab 2 - Feedback
             with gr.Tab("Pitches and Feedback", elem_classes="recital-tabs", id=1):
@@ -308,6 +306,21 @@ def build_demo():
                         "Feedback will appear here after analysis.</div>"
                     )
                 )
+        analyze_btn.click(
+            fn=analyze,
+            inputs=[audio_input, instrument, age_group],
+            outputs=[pitch_out, feedback_out],
+        ).then(
+            fn=None,
+            js="""
+            () => {
+                const tabs = document.querySelectorAll('.tab-nav button');
+                if (tabs.length > 1) {
+                    tabs[1].click();
+                }
+            }
+            """
+        )
 
     return demo
 

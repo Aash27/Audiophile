@@ -109,3 +109,13 @@ Output includes:
 - [John Thornton](https://github.com/thorntonjb)
 - [Eric Tang](https://github.com/er1c84)
 - [Max Kogan](https://github.com/MaxKoganUNCC)
+---
+title: Audiophile
+emoji: 📈
+colorFrom: green
+colorTo: yellow
+sdk: gradio
+sdk_version: 6.12.0
+app_file: app.py
+pinned: false
+---

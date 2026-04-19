@@ -308,7 +308,6 @@ def build_demo():
                             type="filepath",
                             label="🎙️  Record or upload .wav / .mp3",
                             format="wav",
-                            elem_classes="recital-dropdowns"
                         )
 
                         analyze_btn = gr.Button("⚡  Analyze Performance", variant="primary")

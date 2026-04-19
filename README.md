@@ -91,17 +91,6 @@ Main libraries used:
 
 ---
 
-## Project Structure
-audiophile/  
-│  
-├── app.py  
-├── feedback.py  
-├── pitch_utils.py  
-├── instruments.py  
-├── requirements.txt  
-
----
-
 ## Feedback System
 The system uses Groq to generate feedback based on:
 - Detected note and frequency  

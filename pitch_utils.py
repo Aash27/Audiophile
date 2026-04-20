@@ -6,12 +6,32 @@ Returns: frequency (Hz), note name, cents deviation, error string.
 
 import numpy as np
 import librosa
+import matplotlib.pyplot as plt
 
 from instruments import INSTRUMENT_RANGES
 
 NOTE_NAMES = ["C", "C#", "D", "D#", "E", "F",
               "F#", "G", "G#", "A", "A#", "B"]
 
+def create_pitch_graph(pitch_timeline):
+    if pitch_timeline is None or len(pitch_timeline) == 0:
+        return None
+
+    # change to numpy and remove any invalid results
+    pitches = np.array(pitch_timeline)
+    pitches = pitches[~np.isnan(pitches)]
+
+    if len(pitches) == 0:
+        return None
+    
+    plt.figure(figsize=(6, 3))
+    plt.plot(pitches)
+    plt.title("Pitch Over Time")
+    plt.xlabel("Time")
+    plt.ylabel("Frequency (Hz)")
+    plt.grid(True)
+
+    return plt.gcf()
 
 def freq_to_note_cents(frequency: float):
     """
@@ -121,4 +141,5 @@ def detect_pitch_and_note(audio_path: str, instrument: str):
         consistency,
         all_notes[:8],
         None,   # no error
+        f0.tolist()
     )

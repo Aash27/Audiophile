@@ -8,9 +8,10 @@ GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
 print("GROQ_API_KEY LENGTH:", len(GROQ_API_KEY))
 
 if not GROQ_API_KEY:
-    raise ValueError("GROQ_API_KEY missing")
-
-client = Groq(api_key=GROQ_API_KEY)
+    print("WARNING: GROQ_API_KEY missing — fallback mode enabled")
+    client = None
+else:
+    client = Groq(api_key=GROQ_API_KEY)
 
 
 def grade_from_accuracy(accuracy: float):
@@ -82,21 +83,44 @@ Each must be on a new line.
 Do NOT use *, -, bullet symbols, or emojis.
 Keep it clean and professional.
 """
+    try:
+        if client is None:
+            raise Exception("No API key")
 
-    response = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
-        messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt}
-        ],
-        temperature=0.6,
-        max_tokens=200,
-    )
+        response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
+            ],
+            temperature=0.6,
+            max_tokens=200,
+        )
 
-    print("GROQ RESPONSE RECEIVED")
+        print("GROQ RESPONSE RECEIVED")
 
-    raw = response.choices[0].message.content.strip()
+        raw = response.choices[0].message.content.strip()
 
+    except Exception as e:
+        print("GROQ API ERROR:", e)
+
+        return {
+            "overview": "AI feedback unavailable. Showing basic analysis.",
+            "primary_issue": "",
+            "correction_drill": "",
+            "encouragement": "",
+            "accuracy": accuracy,
+            "consistency": consistency,
+            "grade": grade_from_accuracy(accuracy),
+            "cons_label": consistency_label(consistency),
+            "tips": [
+                {
+                    "icon": "→",
+                    "color": "gold",
+                    "text": "Try to play a steady, sustained note for better pitch detection."
+                }
+            ]
+        }
     # ── Clean lines ─────────────────────────────────────
     lines = []
     for line in raw.split("\n"):

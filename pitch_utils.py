@@ -6,13 +6,50 @@ Returns: frequency (Hz), note name, cents deviation, error string.
 
 import numpy as np
 import librosa
+import matplotlib.pyplot as plt
 
 from instruments import INSTRUMENT_RANGES
 
 NOTE_NAMES = ["C", "C#", "D", "D#", "E", "F",
               "F#", "G", "G#", "A", "A#", "B"]
 
+def create_pitch_graph(pitch_timeline):
+    if pitch_timeline is None or len(pitch_timeline) == 0:
+        return None
 
+    # change to numpy and remove any invalid results
+    pitches = np.array(pitch_timeline)
+    pitches = pitches[~np.isnan(pitches)]
+
+    if len(pitches) == 0:
+        return None
+    
+    fig, ax = plt.subplots(figsize=(6, 3))
+
+    # styling
+    fig.patch.set_facecolor("#141417")
+    ax.set_facecolor("#1c1c21")
+
+    # Plot line 
+    ax.plot(pitches, color="#9a5b16", linewidth=2)
+
+    # Grid + axes styling
+    ax.grid(True, color="#2a2a32", linestyle='--', linewidth=0.5)
+    ax.tick_params(colors="#f0ede6")
+
+    # Labels + title
+    ax.set_title("Pitch Over Time", color="#f0ede6")
+    ax.set_xlabel("Time", color="#f0ede6")
+    ax.set_ylabel("Frequency (Hz)", color="#f0ede6")
+
+    # Border styling
+    for spine in ax.spines.values():
+        spine.set_color("#2a2a32")
+    
+    plt.tight_layout()
+
+    return fig
+    
 def freq_to_note_cents(frequency: float):
     """
     Convert a frequency in Hz to (note_name_with_octave, cents_deviation).
@@ -121,4 +158,5 @@ def detect_pitch_and_note(audio_path: str, instrument: str):
         consistency,
         all_notes[:8],
         None,   # no error
+        f0.tolist()
     )

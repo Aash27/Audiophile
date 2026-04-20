@@ -7,6 +7,7 @@ import gradio as gr
 from pitch_utils import detect_pitch_and_note
 from feedback import generate_feedback
 from instruments import INSTRUMENT_RANGES
+from pitch_utils import create_pitch_graph
 
 # Instrument list
 INSTRUMENTS = list(INSTRUMENT_RANGES.keys())
@@ -168,9 +169,9 @@ def analyze(audio_path, instrument, age_group):
             "text-align:center;color:#6b6b7a;font-family:JetBrains Mono,monospace;"
             "font-size:11px;letter-spacing:2px;'>No audio provided.</div>"
         )
-        return empty, empty
+        return empty, empty, None
 
-    freq, note, cents, accuracy, consistency, all_notes, error = \
+    freq, note, cents, accuracy, consistency, all_notes, error, pitch_timeline = \
         detect_pitch_and_note(audio_path, instrument)
 
     if error or note is None:
@@ -180,14 +181,15 @@ def analyze(audio_path, instrument, age_group):
             f"font-family:JetBrains Mono,monospace;font-size:12px;color:#d9534f;"
             f"letter-spacing:1px;'>{msg}</div>"
         )
-        return err_html, err_html
+        return err_html, err_html, None
 
     pitch_html = render_pitch_html(note, freq, cents, accuracy, consistency, all_notes)
     fb_dict    = generate_feedback(instrument, note, freq, cents,
                                    accuracy, consistency, age_group, all_notes)
+    pitch_graph = create_pitch_graph(pitch_timeline)
     fb_html    = render_feedback_html(fb_dict, instrument, age_group)
 
-    return pitch_html, fb_html
+    return pitch_html, fb_html, pitch_graph
 
 
 def build_demo():
@@ -306,10 +308,11 @@ def build_demo():
                         "Feedback will appear here after analysis.</div>"
                     )
                 )
+                graph_out = gr.Plot(label="Pitch Graph")
         analyze_btn.click(
             fn=analyze,
             inputs=[audio_input, instrument, age_group],
-            outputs=[pitch_out, feedback_out],
+            outputs=[pitch_out, feedback_out, graph_out],
         ).then(
             fn=None,
             js="""

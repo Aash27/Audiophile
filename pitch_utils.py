@@ -24,15 +24,32 @@ def create_pitch_graph(pitch_timeline):
     if len(pitches) == 0:
         return None
     
-    plt.figure(figsize=(6, 3))
-    plt.plot(pitches)
-    plt.title("Pitch Over Time")
-    plt.xlabel("Time")
-    plt.ylabel("Frequency (Hz)")
-    plt.grid(True)
+    fig, ax = plt.subplots(figsize=(6, 3))
 
-    return plt.gcf()
+    # styling
+    fig.patch.set_facecolor("#141417")
+    ax.set_facecolor("#1c1c21")
 
+    # Plot line 
+    ax.plot(pitches, color="#9a5b16", linewidth=2)
+
+    # Grid + axes styling
+    ax.grid(True, color="#2a2a32", linestyle='--', linewidth=0.5)
+    ax.tick_params(colors="#f0ede6")
+
+    # Labels + title
+    ax.set_title("Pitch Over Time", color="#f0ede6")
+    ax.set_xlabel("Time", color="#f0ede6")
+    ax.set_ylabel("Frequency (Hz)", color="#f0ede6")
+
+    # Border styling
+    for spine in ax.spines.values():
+        spine.set_color("#2a2a32")
+    
+    plt.tight_layout()
+
+    return fig
+    
 def freq_to_note_cents(frequency: float):
     """
     Convert a frequency in Hz to (note_name_with_octave, cents_deviation).

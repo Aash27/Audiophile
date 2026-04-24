@@ -30,13 +30,23 @@ html, body {
 
 body {
 	background-color: var(--ink);
-	background-image: radial-gradient(var(--ink-soft) 0.05px, transparent 1px);
 	background-size: 4px 4px;
 	color: var(--cream);
 	font-family: var(--sans);
 	font-size: 16px;
 	line-height: 1.5;
 	-webkit-font-smoothing: antialiased;
+}
+
+/* Texture Pattern */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(var(--ink-soft) 0.05px, transparent 1px);
+    background-size: 4px 4px;
+    z-index: -1;
+    pointer-events: none;
 }
 
 img, audio, video { max-width: 100%; display: block; }
@@ -172,8 +182,8 @@ h3 { font-size: 1.25rem; }
 }
 
 /* ================================================================
-   GRADIO OVERRIDES
-   ================================================================ */
+    GRADIO OVERRIDES
+    ================================================================ */
 
 .gradio-container {
 	background: var(--ink) !important;
@@ -358,7 +368,6 @@ fieldset {
 	border-radius: 4px !important;
 	margin-top: 0.5rem !important;
 	width: 100% !important;
-	cursor: not-allowed !important;
 	transition: background 200ms ease, color 200ms ease !important;
 }
 
@@ -370,4 +379,98 @@ fieldset {
 }
 .nav-btn--ready button:hover {
 	background: #ff6120 !important;
+} 
+
+/* ================================================================
+    LIGHT MODE OVERRIDES
+    ================================================================ */
+
+body.light {
+    background-color: var(--paper);
+    color: var(--ink) !important;
+}
+
+body.light::before {
+    background-image: radial-gradient(var(--border) 0.05px, transparent 1px);
+}
+
+body.light html, body.light {
+    color: var(--ink) !important;
+}
+
+body.light .gradio-container {
+    background: var(--paper) !important;
+}
+
+body.light h1, body.light h2, body.light h3, body.light .serif, body.light .eyebrow, body.light .step-title {
+    color: var(--ink) !important;
+}
+
+/* Title & Subtitle Color Adjustment */
+body.light .hero .sans { color: var(--taupe) !important; }
+body.light #hero-subtitle { color: var(--taupe) !important; }
+
+body.light #left { color: var(--taupe); }
+body.light .hero p { color: var(--taupe); }
+
+body.light .paper, body.light .frame {
+    background: var(--cream) !important;
+}
+
+body.light .note p, body.light .step-num {
+    color: var(--taupe) !important;
+}
+
+body.light [data-testid="audio"] {
+    background: var(--cream) !important;
+    border-color: var(--border) !important;
+}
+
+body.light [data-testid="audio"] p, 
+body.light [data-testid="audio"] span, 
+body.light [data-testid="audio"] label {
+    color: var(--ink) !important;
+}
+
+body.light [data-testid="audio"] button {
+    background: var(--paper) !important;
+    color: var(--ink) !important;
+}
+
+body.light .recital-dropdown label {
+    color: var(--ink) !important;
+}
+
+/* Navigation Panel Tab Adjustment (Deselected state) */
+body.light .recital-tabs {
+    color: var(--taupe) !important;
+    opacity: 0.9;
+}
+
+body.light .recital-tabs button.selected {
+    color: var(--gold) !important;
+    border-bottom-color: var(--gold) !important;
+    opacity: 1;
+}
+
+/* Pitch & Feedback Section Headers Adjustment */
+body.light .step-header {
+    color: var(--taupe) !important;
+}
+
+body.light .nav-btn button {
+    background: var(--cream-deep) !important;
+    color: var(--taupe) !important;
+}
+
+/* Note Chips styling*/
+body.light span.chip {
+	background: var(--paper) !important;
+	color: var(--taupe) !important;
+}
+
+/* AI Feedback text colors*/
+body.light .overview-box p, 
+body.light .feedback-tip-text {
+	color: var(--taupe) !important;
 }

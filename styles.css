@@ -30,13 +30,23 @@ html, body {
 
 body {
 	background-color: var(--ink);
-	background-image: radial-gradient(var(--ink-soft) 0.05px, transparent 1px);
 	background-size: 4px 4px;
 	color: var(--cream);
 	font-family: var(--sans);
 	font-size: 16px;
 	line-height: 1.5;
 	-webkit-font-smoothing: antialiased;
+}
+
+/* Texture Pattern */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(var(--ink-soft) 0.05px, transparent 1px);
+    background-size: 4px 4px;
+    z-index: -1;
+    pointer-events: none;
 }
 
 img, audio, video { max-width: 100%; display: block; }
@@ -172,8 +182,8 @@ h3 { font-size: 1.25rem; }
 }
 
 /* ================================================================
-   GRADIO OVERRIDES
-   ================================================================ */
+    GRADIO OVERRIDES
+    ================================================================ */
 
 .gradio-container {
 	background: var(--ink) !important;
@@ -358,7 +368,6 @@ fieldset {
 	border-radius: 4px !important;
 	margin-top: 0.5rem !important;
 	width: 100% !important;
-	cursor: not-allowed !important;
 	transition: background 200ms ease, color 200ms ease !important;
 }
 
@@ -370,4 +379,220 @@ fieldset {
 }
 .nav-btn--ready button:hover {
 	background: #ff6120 !important;
+} 
+
+/* LIGHT MODE OVERRIDES */
+
+body.light {
+    background-color: var(--paper);
+    color: var(--ink) !important;
+}
+
+body.light::before {
+    background-image: radial-gradient(var(--border) 0.05px, transparent 1px);
+}
+
+body.light html, body.light {
+    color: var(--ink) !important;
+}
+
+body.light .gradio-container {
+    background: var(--paper) !important;
+}
+
+body.light h1, body.light h2, body.light h3, body.light .serif, body.light .eyebrow, body.light .step-title {
+    color: var(--ink) !important;
+}
+
+/* Title & Subtitle Color Adjustment */
+body.light .hero .sans { color: var(--taupe) !important; }
+body.light #hero-subtitle { color: var(--taupe) !important; }
+
+body.light #left { color: var(--taupe); }
+body.light .hero p { color: var(--taupe); }
+
+body.light .paper, body.light .frame {
+    background: var(--cream) !important;
+}
+
+body.light .note p, body.light .step-num {
+    color: var(--taupe) !important;
+}
+
+body.light [data-testid="audio"] {
+    background: var(--cream) !important;
+    border-color: var(--border) !important;
+}
+
+/* Kill the dark header bar inside the audio box in light mode */
+body.light [data-testid="audio"] div,
+body.light [data-testid="audio"] > * {
+    background: transparent !important;
+}
+
+body.light [data-testid="audio"] p, 
+body.light [data-testid="audio"] span, 
+body.light [data-testid="audio"] label,
+body.light [data-testid="audio"] .empty-container span,
+body.light [data-testid="audio"] .wrap span {
+    color: var(--ink) !important;
+}
+
+body.light [data-testid="audio"] button {
+    background: var(--paper) !important;
+    color: var(--ink) !important;
+    border-color: var(--border) !important;
+}
+
+body.light .recital-dropdown label {
+    color: var(--ink) !important;
+}
+
+/* Navigation Panel Tab Adjustment (Deselected state) */
+body.light .recital-tabs {
+    color: var(--taupe) !important;
+    opacity: 0.9;
+}
+
+body.light .recital-tabs button.selected {
+    color: var(--gold) !important;
+    border-bottom-color: var(--gold) !important;
+    opacity: 1;
+}
+
+/* Pitch & Feedback Section Headers Adjustment */
+body.light .step-header {
+    color: var(--taupe) !important;
+}
+
+body.light .nav-btn button {
+    background: var(--cream-deep) !important;
+    color: var(--taupe) !important;
+}
+
+/* Note Chips styling for Light Mode */
+body.light span.chip {
+	background: var(--paper) !important;
+	color: var(--taupe) !important;
+}
+
+/* AI Feedback text colors for Light Mode */
+body.light .overview-box p, 
+body.light .feedback-tip-text {
+	color: var(--taupe) !important;
+}
+
+
+/* "Pitches and Feedback" tab + all nav tabs invisible in light mode */
+body.light .tabs > .tab-nav button,
+body.light .tab-nav button {
+    color: var(--taupe) !important;
+    opacity: 1 !important;
+}
+
+body.light .tabs > .tab-nav button.selected,
+body.light .tab-nav button.selected {
+    color: var(--gold) !important;
+    border-bottom-color: var(--gold) !important;
+}
+
+/* Gradio [role="tab"] elements (used by some Gradio versions) */
+body.light [role="tab"] {
+    color: var(--taupe) !important;
+    opacity: 1 !important;
+}
+
+body.light [role="tab"][aria-selected="true"] {
+    color: var(--gold) !important;
+    border-bottom-color: var(--gold) !important;
+}
+
+/* "Instrument" and "Age Group" labels - invisible in light mode */
+body.light label,
+body.light .block label,
+body.light fieldset label,
+body.light .form label,
+body.light .gradio-container label,
+body.light [data-testid="dropdown"] label {
+    color: var(--ink) !important;
+}
+
+/* Step descriptions specifically */
+body.light .step-desc {
+    color: var(--taupe) !important;
+}
+
+/* Instructions text */
+body.light .eyebrow {
+    color: var(--taupe) !important;
+}
+
+/* Gradio-generated label spans for dropdown titles (Instrument, Age Group) */
+body.light .gradio-container span.svelte-1gfkn6j,
+body.light .gradio-container .dropdown-arrow,
+body.light [data-testid="dropdown"] span {
+    color: var(--ink) !important;
+}
+
+
+
+body.light .gradio-container *:not(button) {
+    background-color: transparent !important;
+}
+
+/* Restore backgrounds that genuinely need one */
+body.light .gradio-container [data-testid="audio"] {
+    background-color: var(--cream) !important;
+}
+body.light .recital-dropdown input,
+body.light .recital-dropdown select,
+body.light .recital-dropdown .wrap,
+body.light .recital-dropdown ul,
+body.light .recital-dropdown .options {
+    background-color: var(--cream) !important;
+}
+body.light .nav-btn button {
+    background-color: var(--cream-deep) !important;
+}
+body.light .nav-btn--ready button {
+    background-color: #e8500a !important;
+}
+
+body.light .gradio-container label,
+body.light .gradio-container label span,
+body.light .gradio-container .label-wrap,
+body.light .gradio-container .label-wrap span,
+body.light .gradio-container [class*="label"],
+body.light .gradio-container [class*="label"] span {
+    color: var(--ink) !important;
+    opacity: 1 !important;
+}
+
+body.light #hero-subtitle,
+body.light .hero .serif,
+body.light .hero h1 .serif,
+body.light #comma {
+    color: var(--gold) !important;
+}
+
+
+/* Comma gold */
+body.light #comma {
+    color: var(--gold) !important;
+    opacity: 1 !important;
+}
+
+/* Instrument / Age Group - Gradio fades these via opacity on multiple levels */
+body.light .gradio-container label,
+body.light .gradio-container label *,
+body.light .gradio-container .block > label,
+body.light .gradio-container .block > label > span,
+body.light .gradio-container fieldset > span,
+body.light .gradio-container span[data-testid],
+body.light .gradio-container .wrap > span,
+body.light .gradio-container > div > div > div > label,
+body.light .gradio-container > div > div > div > label > span {
+    color: var(--ink) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
 }

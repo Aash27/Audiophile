@@ -1,7 +1,7 @@
 # Audiophile — Pitch Detection and Feedback System
 
 ## Live Demo
-Access the application here: [Audio_phile_](https://huggingface.co/spaces/aashle/Audiophile_Final)
+Access the application here: [Audiophile_](https://huggingface.co/spaces/aashle/Audiophile_Final)
 
 ---
 
